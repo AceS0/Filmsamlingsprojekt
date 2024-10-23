@@ -12,10 +12,26 @@ public class UserInterface {
         while (running) {
             int userInput = sc.nextInt();
             switch (userInput) {
-                case 1 ->
+                case 1 -> addMovieByUser();
             }
 
         }
+
+    }
+    public void addMovieByUser()
+    {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("skriv navn");
+        String navn = sc.nextLine();
+        System.out.println("skriv direktør");
+        String direktør = sc.nextLine();
+        System.out.println("skriv udgivelses år");
+        int yearCreated = sc.nextInt();
+
+        controller.addMovieToCollection(navn,direktør,yearCreated,isInColor,lengthInMinutes,genre);
+
+
 
     }
 }

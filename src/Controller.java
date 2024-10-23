@@ -7,13 +7,8 @@ public class Controller {
 
     }
 
-    public void addMovieToCollection(Movie movie){
-
-        movies.addMovie(movie);
-    }
-
-    public Movie createMovie(String title, String director, int yearCreated, boolean isInColor, int lengthInMinutes, String genre){
-       return new Movie(title,director,yearCreated,isInColor,lengthInMinutes,genre);
+    public void addMovieToCollection(String title, String director, int yearCreated, boolean isInColor, int lengthInMinutes, String genre) {
+       movies.addMovie(new Movie(title,director,yearCreated,isInColor,lengthInMinutes,genre));
 
     }
 }
