@@ -50,7 +50,7 @@ public class UserInterface {
         String genre = sc.next();
         controller.addMovieToCollection(name,director,yearCreated,isInColor,lengthInMinutes,genre);
     }
-    public void movieList(){
+    public void getMovieList(){
         System.out.println(controller.movies.movieList());
 
     }
