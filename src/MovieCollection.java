@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 public class MovieCollection {
     private ArrayList<Movie> collection = new ArrayList<>();
@@ -17,14 +18,12 @@ public class MovieCollection {
         return null;
     }
 
-    public Movie movieFinder() {
+    public Movie movieFinder(String searchTerm) {
         for (Movie movie : collection) {
 
-            if (movie.getTitle().equalsIgnoreCase(movie.getTitle())) {
+            if (movie.getTitle().toLowerCase().contains(searchTerm.toLowerCase())){
                 return movie;
             }
-
-
         }
         return null;
     }

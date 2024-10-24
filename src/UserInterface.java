@@ -6,21 +6,21 @@ public class UserInterface {
     public void userInterface() {
         boolean running = true;
         Scanner sc = new Scanner(System.in);
-        System.out.println("Welcome to your movie collection.\n\n"+
-                "1. Create a movie.\n"+
-                "2. Exit.\n" +
-                "3. List of the movies\n" +
-                "4. Get a help list.");
-        System.out.print("Choose an option: ");
+
         while (running) {
+            System.out.println("Welcome to your movie collection.\n\n"+
+                    "1. Create a movie.\n"+
+                    "2. Exit.\n" +
+                    "3. List of the movies\n" +
+                    "4. Get a help list.");
+            System.out.print("Choose an option: ");
             String userInput = sc.nextLine().toLowerCase();
             switch (userInput) {
                 case "create","1" -> addMovieByUser();
                 case "exit","2" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
                 case "list","l","3" -> getMovieList();
                 case "help", "h","4" -> helpList();
-                case "search", "s","5" -> {
-                }
+                case "search", "s","5" -> searchForFilm();
                 default -> System.out.println("Unknown request, please try again.");
             }
         }
@@ -31,7 +31,7 @@ public class UserInterface {
 
         System.out.print("What's the name of the movie: ");
         String name = sc.nextLine();
-        System.out.print("Whose the director: ");
+        System.out.print("Who is the director: ");
         String director = sc.nextLine();
         System.out.print("Which year was the movie released: ");
         int yearCreated = sc.nextInt();
@@ -50,6 +50,7 @@ public class UserInterface {
         String genre = sc.next();
         controller.addMovieToCollection(name,director,yearCreated,isInColor,lengthInMinutes,genre);
     }
+
     public void getMovieList(){
         System.out.println(controller.movies.movieList());
 
@@ -67,5 +68,47 @@ public class UserInterface {
         return ("Title: "+movieName.getTitle()+"\nDirector: "+movieName.getDirector()+
                 "\nRelease year: "+movieName.getYearCreated()+"\nIn color: "+movieName.getIsInColor()+
                 "\nLength (in minutes): "+movieName.getLengthInMinutes()+"\nGenre: "+movieName.getGenre()+"\n");
+    }
+
+    public void searchForFilm()
+    {
+        System.out.print("insert search term: ");
+        Scanner sc = new Scanner(System.in);
+        Movie found = controller.runSearch(sc.nextLine());
+        if(found != null)
+        {
+            System.out.println(getMovieDesc(found) + "\n\nDo you wish to edit this movie?" );
+            if (sc.nextLine().toLowerCase().contains("y"))
+            {
+                editFilm(found);
+            }
+
+        }else
+        {
+            System.out.println("movie could not be found");
+        }
+
+    }
+
+    public void editFilm(Movie film)
+    {
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
+        System.out.println("1. name, 2. director, 3. year, 4. color, 5. length, 6. genre");
+        switch (sc.nextLine())
+        {
+            case "1":
+                break;
+            case "2":
+                break;
+            case "3":
+                break;
+            case "4":
+                break;
+            case "5" :
+                break;
+            case "6":
+                break;
+        }
     }
 }
