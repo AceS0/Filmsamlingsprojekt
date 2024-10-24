@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Locale;
 
 public class MovieCollection {
     private ArrayList<Movie> collection = new ArrayList<>();
@@ -10,22 +8,25 @@ public class MovieCollection {
     }
 
     public String movieList() {
+        String toPrint = "";
+        int counter = 1;
         for (Movie movie : collection) {
-            return ("Title: "+movie.getTitle()+"\nDirector: "+movie.getDirector()+
+            toPrint += ("\nMovie " + counter++ +": \nTitle: "+movie.getTitle()+"\nDirector: "+movie.getDirector()+
                     "\nRelease year: "+movie.getYearCreated()+"\nIn color: "+movie.getIsInColor()+
                     "\nLength (in minutes): "+movie.getLengthInMinutes()+"\nGenre: "+movie.getGenre()+"\n");
         }
-        return null;
+        return toPrint;
     }
 
-    public Movie movieFinder(String searchTerm) {
+    public ArrayList<Movie> movieFinder(String searchTerm) {
+        ArrayList<Movie> results = new ArrayList<Movie>();
         for (Movie movie : collection) {
 
             if (movie.getTitle().toLowerCase().contains(searchTerm.toLowerCase())){
-                return movie;
+                 results.add(movie);
             }
         }
-        return null;
+        return results;
     }
 
 
