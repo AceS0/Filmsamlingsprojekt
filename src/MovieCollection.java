@@ -10,6 +10,7 @@ public class MovieCollection {
     }
 
     public String movieList() {
+        String a = "";
         for (Movie movie : collection) {
             return ("Title: "+movie.getTitle()+"\nDirector: "+movie.getDirector()+
                     "\nRelease year: "+movie.getYearCreated()+"\nIn color: "+movie.getIsInColor()+
@@ -18,14 +19,15 @@ public class MovieCollection {
         return null;
     }
 
-    public Movie movieFinder(String searchTerm) {
+    public ArrayList<Movie> movieFinder(String searchTerm) {
+        ArrayList<Movie> results = new ArrayList<Movie>();
         for (Movie movie : collection) {
 
             if (movie.getTitle().toLowerCase().contains(searchTerm.toLowerCase())){
-                return movie;
+                 results.add(movie);
             }
         }
-        return null;
+        return results;
     }
 
 

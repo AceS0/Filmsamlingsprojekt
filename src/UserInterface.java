@@ -1,4 +1,5 @@
-import javax.xml.namespace.QName;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -76,15 +77,12 @@ public class UserInterface {
     public void searchForFilm() {
         System.out.print("insert search term: ");
         Scanner sc = new Scanner(System.in);
-        Movie found = controller.runSearch(sc.nextLine());
+        ArrayList<Movie> found = controller.runSearch(sc.nextLine());
         if(found != null)
         {
-            System.out.println(getMovieDesc(found) + "\n\nDo you wish to edit this movie?" );
-            if (sc.nextLine().toLowerCase().contains("y"))
-            {
-                editFilm(found, "help");
+            for (Movie movie : found) {
+                getMovieDesc(movie);
             }
-
         }else
         {
             System.out.println("movie could not be found");
@@ -99,17 +97,25 @@ public class UserInterface {
         switch (sc.nextLine())
         {
             case "1":
-                System.out.println(controller.EditMovie(film, "title", edit) );
+                System.out.print("what should the new title be: ");
+                System.out.println(controller.EditMovie(film, "title", sc.nextLine()));
                 break;
             case "2":
+                System.out.print("who should the new director be: ");
+                System.out.println(controller.EditMovie(film, "title", sc.nextLine()));
                 break;
             case "3":
+                System.out.print("what is the new release year: ");
                 break;
             case "4":
+                System.out.print("is it in color: ");
                 break;
             case "5" :
+                System.out.print("how long is the movie now: ");
                 break;
             case "6":
+                System.out.print("what is the new genre: ");
+                System.out.println(controller.EditMovie(film, "genre", sc.nextLine()));
                 break;
         }
     }

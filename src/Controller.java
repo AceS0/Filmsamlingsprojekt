@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Controller {
     MovieCollection movies = new MovieCollection();
     Movie movie;
@@ -8,9 +10,11 @@ public class Controller {
        movies.addMovie(new Movie(title,director,yearCreated,isInColor,lengthInMinutes,genre));
     }
 
-    public Movie runSearch(String searchTerm)
+    public ArrayList<Movie> runSearch(String searchTerm)
     {
-        return movies.movieFinder(searchTerm);
+        ArrayList<Movie> results = movies.movieFinder(searchTerm);
+        System.out.println(searchTerm);
+        return results;
     }
     public String EditMovie(Movie movie, String gotcha, String edit)
     {
