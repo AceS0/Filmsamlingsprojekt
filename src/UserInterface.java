@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class UserInterface {
     Controller controller = new Controller();
+
     public void userInterface() {
         boolean running = true;
         Scanner sc = new Scanner(System.in);
@@ -19,10 +20,9 @@ public class UserInterface {
                 }
                 default -> System.out.println("Unknown request, please try again.");
             }
-
         }
-
     }
+
     public void addMovieByUser()
     {
         Scanner sc = new Scanner(System.in);
@@ -48,7 +48,7 @@ public class UserInterface {
         String genre = sc.nextLine();
         controller.addMovieToCollection(navn,direktør,yearCreated,isInColor,lengthInMinutes,genre);
 
-
+        userInterface();
 
     }
 }
