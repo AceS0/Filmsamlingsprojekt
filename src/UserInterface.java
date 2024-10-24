@@ -8,7 +8,7 @@ public class UserInterface {
         Scanner sc = new Scanner(System.in);
 
         while (running) {
-            System.out.println("Welcome to your movie collection.\n\n"+
+            System.out.println("Welcome to your movie collection.\n"+
                     "1. Create a movie.\n"+
                     "2. Exit.\n" +
                     "3. List of the movies\n" +
@@ -52,8 +52,11 @@ public class UserInterface {
     }
 
     public void getMovieList(){
-        System.out.println(controller.movies.movieList());
-
+        if (controller.movies.movieList() == null){
+            System.out.println("\nThe list is empty, please create a movie.\n");
+        } else {
+            System.out.println(controller.movies.movieList());
+        }
     }
 
     public void helpList(){
