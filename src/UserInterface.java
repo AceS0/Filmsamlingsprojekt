@@ -8,16 +8,17 @@ public class UserInterface {
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome to your movie collection.\n\n"+
                 "1. Create a movie.\n"+
-                "2. Exit.");
+                "2. Exit.\n" +
+                "3. List of the movies\n" +
+                "4. Get a help list.");
         System.out.print("Choose an option: ");
         while (running) {
-            int userInput = sc.nextInt();
+            String userInput = sc.nextLine().toLowerCase();
             switch (userInput) {
-                case 1 -> addMovieByUser();
-                case 2 -> {
-                    System.out.println("Thank you for your time, hope to see you again.");
-                    return;
-                }
+                case "create","1" -> addMovieByUser();
+                case "exit","2" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
+                case "list","l","3" -> movieList();
+                case "help", "h","4" -> helpList();
                 default -> System.out.println("Unknown request, please try again.");
             }
         }
@@ -28,9 +29,9 @@ public class UserInterface {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("What's the name of the movie: ");
-        String navn = sc.nextLine();
+        String name = sc.nextLine();
         System.out.print("Whose the director: ");
-        String direktør = sc.nextLine();
+        String director = sc.nextLine();
         System.out.print("Which year was the movie released: ");
         int yearCreated = sc.nextInt();
         System.out.println("Is the movie in color? (Yes/No)");
@@ -45,8 +46,20 @@ public class UserInterface {
         System.out.print("How long is the movie (in minutes): ");
         int lengthInMinutes = sc.nextInt();
         System.out.print("In what genre type is the movie: ");
-        String genre = sc.nextLine();
-        controller.addMovieToCollection(navn,direktør,yearCreated,isInColor,lengthInMinutes,genre);
+        String genre = sc.next();
+        controller.addMovieToCollection(name,director,yearCreated,isInColor,lengthInMinutes,genre);
+    }
+    public void movieList(){
+        controller.movies.movieList();
 
     }
+
+    public void helpList(){
+        System.out.println(
+                "Type [1, create] -> Create a movie.\n"+
+                "Type [2, exit] -> Exit the application.\n" +
+                "Type [3, list, l] -> List the movies.\n" +
+                "Type [4, help, h] -> Get a help list.");
+    }
+
 }

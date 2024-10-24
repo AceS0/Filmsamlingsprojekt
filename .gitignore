@@ -2,7 +2,6 @@
 out/
 .idea/
 *.iml
-Filmsamling_del1-4.docx/
 !**/src/main/**/out/
 !**/src/test/**/out/
 

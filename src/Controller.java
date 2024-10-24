@@ -1,5 +1,6 @@
 public class Controller {
     MovieCollection movies = new MovieCollection();
+    Movie movie;
     public Controller(){
     }
 
