@@ -12,8 +12,29 @@ public class Controller {
     {
         return movies.movieFinder(searchTerm);
     }
-    public String EditMovie(Movie movie, int casenumber, String edit)
+    public String EditMovie(Movie movie, String gotcha, String edit)
     {
-        return null;
+        switch (gotcha) {
+            case "title":
+                movie.setTitle(edit);
+                return edit;
+            case "director":
+                movie.setDirector(edit);
+                return edit;
+            case "year":
+                movie.setYearCreated(Integer.parseInt(edit));
+                return edit;
+            case "color":
+                movie.setIsInColor(edit);
+                return edit;
+            case "length":
+                movie.setLengthInMinutes(Integer.parseInt(edit));
+                return edit;
+            case "genre":
+                movie.setGenre(edit);
+                return edit;
+            default:
+                return null;
+        }
     }
 }

@@ -1,3 +1,4 @@
+import javax.xml.namespace.QName;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -35,6 +36,7 @@ public class UserInterface {
         String director = sc.nextLine();
         System.out.print("Which year was the movie released: ");
         int yearCreated = sc.nextInt();
+        System.out.println(yearCreated);
         System.out.println("Is the movie in color? (Yes/No)");
         String isInColor = sc.next().toLowerCase();
         while(!isInColor.equals("yes") && !isInColor.equals("no")) {
@@ -70,8 +72,7 @@ public class UserInterface {
                 "\nLength (in minutes): "+movieName.getLengthInMinutes()+"\nGenre: "+movieName.getGenre()+"\n");
     }
 
-    public void searchForFilm()
-    {
+    public void searchForFilm() {
         System.out.print("insert search term: ");
         Scanner sc = new Scanner(System.in);
         Movie found = controller.runSearch(sc.nextLine());
@@ -80,7 +81,7 @@ public class UserInterface {
             System.out.println(getMovieDesc(found) + "\n\nDo you wish to edit this movie?" );
             if (sc.nextLine().toLowerCase().contains("y"))
             {
-                editFilm(found);
+                editFilm(found, "help");
             }
 
         }else
@@ -90,14 +91,14 @@ public class UserInterface {
 
     }
 
-    public void editFilm(Movie film)
-    {
+    public void editFilm(Movie film, String edit) {
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
         System.out.println("1. name, 2. director, 3. year, 4. color, 5. length, 6. genre");
         switch (sc.nextLine())
         {
             case "1":
+                System.out.println(controller.EditMovie(film, "title", edit) );
                 break;
             case "2":
                 break;
