@@ -48,7 +48,5 @@ public class UserInterface {
         String genre = sc.nextLine();
         controller.addMovieToCollection(navn,direktør,yearCreated,isInColor,lengthInMinutes,genre);
 
-        userInterface();
-
     }
 }
