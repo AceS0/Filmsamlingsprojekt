@@ -18,6 +18,8 @@ public class UserInterface {
             System.out.print("Choose an option: ");
             String userInput = sc.nextLine().toLowerCase();
             String[] splitPut = userInput.split(" ");
+
+
             switch (userInput) {
                 case "create","1" -> addMovieByUser();
                 case "exit","2" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
@@ -38,7 +40,6 @@ public class UserInterface {
         String director = sc.nextLine();
         System.out.print("Which year was the movie released: ");
         int yearCreated = sc.nextInt();
-        System.out.println(yearCreated);
         System.out.println("Is the movie in color? (Yes/No)");
         String isInColor = sc.next().toLowerCase();
         while(!isInColor.equals("yes") && !isInColor.equals("no")) {
