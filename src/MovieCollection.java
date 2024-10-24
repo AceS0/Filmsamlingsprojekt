@@ -18,14 +18,15 @@ public class MovieCollection {
         return toPrint;
     }
 
-    public Movie movieFinder(String searchTerm) {
+    public ArrayList<Movie> movieFinder(String searchTerm) {
+        ArrayList<Movie> results = new ArrayList<Movie>();
         for (Movie movie : collection) {
 
             if (movie.getTitle().toLowerCase().contains(searchTerm.toLowerCase())){
-                return movie;
+                 results.add(movie);
             }
         }
-        return null;
+        return results;
     }
 
 
