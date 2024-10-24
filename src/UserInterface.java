@@ -17,15 +17,14 @@ public class UserInterface {
             switch (userInput) {
                 case "create","1" -> addMovieByUser();
                 case "exit","2" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
-                case "list","l","3" -> movieList();
+                case "list","l","3" -> getMovieList();
                 case "help", "h","4" -> helpList();
                 default -> System.out.println("Unknown request, please try again.");
             }
         }
     }
 
-    public void addMovieByUser()
-    {
+    public void addMovieByUser() {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("What's the name of the movie: ");
@@ -49,9 +48,8 @@ public class UserInterface {
         String genre = sc.next();
         controller.addMovieToCollection(name,director,yearCreated,isInColor,lengthInMinutes,genre);
     }
-    public void movieList(){
+    public void getMovieList(){
         controller.movies.movieList();
-
     }
 
     public void helpList(){
@@ -62,4 +60,9 @@ public class UserInterface {
                 "Type [4, help, h] -> Get a help list.");
     }
 
+    public String getMovieDesc(Movie movieName) {
+        return ("Title: "+movieName.getTitle()+"\nDirector: "+movieName.getDirector()+
+                "\nRelease year: "+movieName.getYearCreated()+"\nIn color: "+movieName.getIsInColor()+
+                "\nLength (in minutes): "+movieName.getLengthInMinutes()+"\nGenre: "+movieName.getGenre()+"\n");
+    }
 }
