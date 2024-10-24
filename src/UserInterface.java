@@ -16,6 +16,7 @@ public class UserInterface {
                     "4. Get a help list.");
             System.out.print("Choose an option: ");
             String userInput = sc.nextLine().toLowerCase();
+            String[] splitPut = userInput.split(" ");
             switch (userInput) {
                 case "create","1" -> addMovieByUser();
                 case "exit","2" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
