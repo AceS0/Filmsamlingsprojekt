@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Controller {
     MovieCollection movies = new MovieCollection();
-    Movie movie;
+    //Movie movie;
     public Controller(){
     }
 
@@ -13,12 +13,6 @@ public class Controller {
     public ArrayList<Movie> runSearch(String searchTerm)
     {
         ArrayList<Movie> results = movies.movieFinder(searchTerm);
-        System.out.println(searchTermfor (Movie movie : collection) {
-
-        if (movie.getTitle().toLowerCase().contains(searchTerm.toLowerCase())){
-            results.add(movie);
-        }
-    });
         return results;
     }
     public String EditMovie(Movie movie, String gotcha, String edit)
@@ -31,13 +25,15 @@ public class Controller {
                 movie.setDirector(edit);
                 return edit;
             case "year":
-                movie.setYearCreated(Integer.parseInt(edit));
+                String editnum = edit.replaceAll("[^0-9]", "");
+                movie.setYearCreated(Integer.parseInt(editnum));
                 return edit;
             case "color":
                 movie.setIsInColor(edit);
                 return edit;
             case "length":
-                movie.setLengthInMinutes(Integer.parseInt(edit));
+                String editnum2 = edit.replaceAll("[^0-9]", "");
+                movie.setLengthInMinutes(Integer.parseInt(editnum2));
                 return edit;
             case "genre":
                 movie.setGenre(edit);
