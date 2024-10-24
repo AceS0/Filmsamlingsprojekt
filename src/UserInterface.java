@@ -19,6 +19,8 @@ public class UserInterface {
                 case "exit","2" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
                 case "list","l","3" -> movieList();
                 case "help", "h","4" -> helpList();
+                case "search", "s","5" -> {
+                }
                 default -> System.out.println("Unknown request, please try again.");
             }
         }
@@ -50,7 +52,7 @@ public class UserInterface {
         controller.addMovieToCollection(name,director,yearCreated,isInColor,lengthInMinutes,genre);
     }
     public void movieList(){
-        controller.movies.movieList();
+        System.out.println(controller.movies.movieList());
 
     }
 
@@ -61,5 +63,7 @@ public class UserInterface {
                 "Type [3, list, l] -> List the movies.\n" +
                 "Type [4, help, h] -> Get a help list.");
     }
+
+
 
 }

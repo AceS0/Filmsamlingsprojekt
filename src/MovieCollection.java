@@ -8,11 +8,26 @@ public class MovieCollection {
         collection.add(movie);
     }
 
-    public void movieList() {
+    public String movieList() {
         for (Movie movie : collection) {
-            System.out.println("Title: "+movie.getTitle()+"\nDirector: "+movie.getDirector()+
+            return ("Title: "+movie.getTitle()+"\nDirector: "+movie.getDirector()+
                     "\nRelease year: "+movie.getYearCreated()+"\nIn color: "+movie.getIsInColor()+
                     "\nLength (in minutes): "+movie.getLengthInMinutes()+"\nGenre: "+movie.getGenre()+"\n");
         }
+        return null;
     }
+
+    public Movie movieFinder() {
+        for (Movie movie : collection) {
+
+            if (movie.getTitle().equalsIgnoreCase(movie.getTitle())) {
+                return movie;
+            }
+
+
+        }
+        return null;
+    }
+
+
 }
