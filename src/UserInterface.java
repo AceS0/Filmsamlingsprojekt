@@ -17,7 +17,7 @@ public class UserInterface {
             switch (userInput) {
                 case "create","1" -> addMovieByUser();
                 case "exit","2" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
-                case "list","l","3" -> movieList();
+                case "list","l","3" -> getMovieList();
                 case "help", "h","4" -> helpList();
                 case "search", "s","5" -> {
                 }
@@ -26,8 +26,7 @@ public class UserInterface {
         }
     }
 
-    public void addMovieByUser()
-    {
+    public void addMovieByUser() {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("What's the name of the movie: ");
@@ -64,6 +63,9 @@ public class UserInterface {
                 "Type [4, help, h] -> Get a help list.");
     }
 
-
-
+    public String getMovieDesc(Movie movieName) {
+        return ("Title: "+movieName.getTitle()+"\nDirector: "+movieName.getDirector()+
+                "\nRelease year: "+movieName.getYearCreated()+"\nIn color: "+movieName.getIsInColor()+
+                "\nLength (in minutes): "+movieName.getLengthInMinutes()+"\nGenre: "+movieName.getGenre()+"\n");
+    }
 }
