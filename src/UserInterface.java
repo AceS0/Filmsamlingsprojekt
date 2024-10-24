@@ -1,3 +1,5 @@
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -18,10 +20,11 @@ public class UserInterface {
             System.out.print("\nChoose an option: ");
             String userInput = sc.nextLine().toLowerCase();
             String[] splitPut = userInput.split(" ");
+
+
             switch (userInput) {
                 case "create","1" -> addMovieByUser();
-                case "exit","2" -> {System.out.println("Thank you for your time, hope to see you again.");
-                    return;}
+                case "exit","2" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
                 case "list","l","3" -> getMovieList();
                 case "help", "h","4" -> helpList();
                 case "search", "s","5" -> searchForFilm();
