@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class UserInterface {
     Controller controller = new Controller();
 
+
     public void userInterface() {
         boolean running = true;
         Scanner sc = new Scanner(System.in);
@@ -12,10 +13,10 @@ public class UserInterface {
         System.out.println(
                 "Welcome to your movie collection.\n"
                 +"1. Create a movie.\n"+
-                "2. Exit.\n" +
+                "2. Search movie.\n" +
                 "3. List of the movies\n" +
                 "4. Get a help list.\n" +
-                "5. Search movie");
+                "5. Exit");
         while (running) {
             System.out.print("\nChoose an option: ");
             String userInput = sc.nextLine().toLowerCase();
@@ -24,13 +25,13 @@ public class UserInterface {
 
             switch (userInput) {
                 case "create","1" -> addMovieByUser();
-                case "exit","2" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
+                case "search", "s","2" -> searchForFilm();
                 case "list","l","3" -> getMovieList();
                 case "help", "h","4" -> helpList();
-                case "search", "s","5" -> searchForFilm();
+                case "exit","5" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
                 default -> System.out.println("Unknown request, please try again.");
             }
-            System.out.println("Type \"help\", \"h\", \"4\"");
+            System.out.println("Type \"help\", for a list of commands.");
         }
     }
 
@@ -52,8 +53,6 @@ public class UserInterface {
 
 
         System.out.print("Is the movie in color? (Yes/No): ");
-        System.out.println(yearCreated);
-        System.out.println("Is the movie in color? (Yes/No)");
         String isInColor = sc.next().toLowerCase();
         while(!isInColor.equals("yes") && !isInColor.equals("no")) {
                 System.out.println("Unknown request, please try again. \"Hint (Yes / No)\"");
@@ -86,9 +85,10 @@ public class UserInterface {
     public void helpList(){
         System.out.println(
                 "Type [1, create] -> Create a movie.\n"+
-                "Type [2, exit] -> Exit the application.\n" +
+                "Type [2, search, s] -> Search for a movie.\n" +
                 "Type [3, list, l] -> List the movies.\n" +
-                "Type [4, help, h] -> Get a help list.\n");
+                "Type [4, help, h] -> Get a help list.\n" +
+                "Type [5, exit] -> Exit the application.\n");
     }
 
     public String getMovieDesc(Movie movieName) {
