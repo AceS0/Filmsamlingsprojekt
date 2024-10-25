@@ -11,24 +11,40 @@ public class UserInterface {
         Scanner sc = new Scanner(System.in);
 
         System.out.println(
-                "Welcome to your movie collection.\n"
-                +"1. Create a movie.\n"+
+                "Welcome to your movie collection.\n" +
+                "1. Create a movie.\n"+
                 "2. Search movie.\n" +
                 "3. List of the movies\n" +
                 "4. Get a help list.\n" +
-                "5. Exit");
+                "5. Edit a movie\n" +
+                "6. Exit");
         while (running) {
             System.out.print("\nChoose an option: ");
             String userInput = sc.nextLine().toLowerCase();
             String[] splitPut = userInput.split(" ");
+            String command = splitPut[0];
 
-
-            switch (userInput) {
+            switch (command) {
                 case "create","1" -> addMovieByUser();
-                case "search", "s","2" -> searchForFilm();
+                case "search", "s","2" -> {
+                    if (splitPut.length > 1){
+                    searchForFilm(splitPut[1]);
+                     } else {
+                        System.out.print("insert search term: ");
+                        searchForFilm(sc.nextLine());
+                    }
+                }
                 case "list","l","3" -> getMovieList();
                 case "help", "h","4" -> helpList();
-                case "exit","5" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
+                case "edit", "5" -> {
+                    if (splitPut.length > 1){
+                        editMovie(splitPut[1]);
+                    } else {
+                        System.out.print("Insert the movie you want to edit: ");
+                        editMovie(sc.nextLine());
+                    }
+                }
+                case "exit","6" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
                 default -> System.out.println("Unknown request, please try again.");
             }
             System.out.println("Type \"help\", for a list of commands.");
@@ -84,29 +100,28 @@ public class UserInterface {
 
     public void helpList(){
         System.out.println(
-                "Type [1, create] -> Create a movie.\n"+
-                "Type [2, search, s] -> Search for a movie.\n" +
-                "Type [3, list, l] -> List the movies.\n" +
-                "Type [4, help, h] -> Get a help list.\n" +
-                "Type [5, exit] -> Exit the application.\n");
+                    "Type [1, create] -> Create a movie.\n"+
+                    "Type [2, search, s] -> Search for a movie.\n" +
+                    "Type [3, list, l] -> List the movies.\n" +
+                    "Type [4, help, h] -> Get a help list.\n" +
+                    "Type [5, edit] -> Edit a movie.\n" +
+                    "Type [6, exit] -> Exit the application.\n");
     }
 
     public String getMovieDesc(Movie movieName) {
-        return ("Title: "+movieName.getTitle()+"\nDirector: "+movieName.getDirector()+
+        return ("\nTitle: "+movieName.getTitle()+"\nDirector: "+movieName.getDirector()+
                 "\nRelease year: "+movieName.getYearCreated()+"\nIn color: "+movieName.getIsInColor()+
                 "\nLength (in minutes): "+movieName.getLengthInMinutes()+"\nGenre: "+movieName.getGenre()+"\n");
     }
-
-    public void searchForFilm() {
-        System.out.print("insert search term: ");
-        Scanner sc = new Scanner(System.in);
-        ArrayList<Movie> found = controller.runSearch(sc.nextLine());
+    public void searchForFilm(String film) {
+        ArrayList<Movie> found = controller.runSearch(film);
         if(found != null)
         {
             if(found.size() == 1)
             {
+                Scanner sc = new Scanner(System.in);
                 System.out.println("do you want to edit " + found.getFirst().getTitle());
-                String check =sc.nextLine();
+                String check = sc.nextLine();
                 if(check == "yes") {
                     editFilm(found.getFirst(), "placeholder");
                 }
@@ -121,7 +136,17 @@ public class UserInterface {
 
     }
 
+    public void editMovie(String film){
+        ArrayList<Movie> found = controller.runSearch(film);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("do you want to edit " + found.getFirst().getTitle());
+        if(sc.next().equalsIgnoreCase("yes")) {
+            editFilm(found.getFirst(), "placeholder");
+        }
+    }
+
     public void editFilm(Movie film, String edit) {
+        System.out.println(getMovieDesc(film));
         Scanner sc = new Scanner(System.in);
         System.out.println("1. name, 2. director, 3. year, 4. color, 5. length, 6. genre");
         String hi = sc.nextLine();
