@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -103,6 +104,10 @@ public class UserInterface {
         ArrayList<Movie> found = controller.runSearch(sc.nextLine());
         if(found != null)
         {
+            if(found.size() == 1)
+            {
+                editFilm(found.getFirst(), "placeholder" );
+            }
             for (Movie movie : found) {
                 getMovieDesc(movie);
             }
@@ -115,9 +120,9 @@ public class UserInterface {
 
     public void editFilm(Movie film, String edit) {
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
         System.out.println("1. name, 2. director, 3. year, 4. color, 5. length, 6. genre");
-        switch (sc.nextLine())
+        String hi = sc.nextLine();
+        switch (hi)
         {
             case "1":
                 System.out.print("what should the new title be: ");
@@ -125,16 +130,27 @@ public class UserInterface {
                 break;
             case "2":
                 System.out.print("who should the new director be: ");
-                System.out.println(controller.EditMovie(film, "title", sc.nextLine()));
+                System.out.println(controller.EditMovie(film, "director", sc.nextLine()));
                 break;
             case "3":
                 System.out.print("what is the new release year: ");
+                System.out.println(controller.EditMovie(film, "year", sc.nextLine()));
                 break;
             case "4":
-                System.out.print("is it in color: ");
+                while(true)
+                {
+                    System.out.print("is it in color: ");
+                    hi = sc.nextLine();
+                    if (hi.equals("yes") || hi.equals("no"))
+                    {
+                        System.out.println(controller.EditMovie(film, "color", hi));
+                        break;
+                    }
+                }
                 break;
             case "5" :
                 System.out.print("how long is the movie now: ");
+                System.out.println(controller.EditMovie(film, "length", sc.nextLine()));
                 break;
             case "6":
                 System.out.print("what is the new genre: ");
