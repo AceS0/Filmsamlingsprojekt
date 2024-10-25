@@ -13,6 +13,12 @@ public class Controller {
     public ArrayList<Movie> runSearch(String searchTerm)
     {
         ArrayList<Movie> results = movies.movieFinder(searchTerm);
+        for (Movie movie : results) {
+
+            if (movie.getTitle().toLowerCase().contains(searchTerm.toLowerCase())){
+                results.add(movie);
+            }
+        }
         return results;
     }
     public String EditMovie(Movie movie, String gotcha, String edit)

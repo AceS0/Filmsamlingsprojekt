@@ -1,34 +1,37 @@
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class UserInterface {
     Controller controller = new Controller();
 
+
     public void userInterface() {
         boolean running = true;
         Scanner sc = new Scanner(System.in);
 
+        System.out.println(
+                "Welcome to your movie collection.\n"
+                +"1. Create a movie.\n"+
+                "2. Search movie.\n" +
+                "3. List of the movies\n" +
+                "4. Get a help list.\n" +
+                "5. Exit");
         while (running) {
-            System.out.println("Welcome to your movie collection.\n"+
-                    "1. Create a movie.\n"+
-                    "2. Exit.\n" +
-                    "3. List of the movies\n" +
-                    "4. Get a help list.");
-            System.out.print("Choose an option: ");
+            System.out.print("\nChoose an option: ");
             String userInput = sc.nextLine().toLowerCase();
             String[] splitPut = userInput.split(" ");
 
 
             switch (userInput) {
                 case "create","1" -> addMovieByUser();
-                case "exit","2" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
+                case "search", "s","2" -> searchForFilm();
                 case "list","l","3" -> getMovieList();
                 case "help", "h","4" -> helpList();
-                case "search", "s","5" -> searchForFilm();
+                case "exit","5" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
                 default -> System.out.println("Unknown request, please try again.");
             }
+            System.out.println("Type \"help\", for a list of commands.");
         }
     }
 
@@ -40,8 +43,16 @@ public class UserInterface {
         System.out.print("Who is the director: ");
         String director = sc.nextLine();
         System.out.print("Which year was the movie released: ");
+        while (!sc.hasNextInt()){
+            System.out.print("Invalid input. Please enter a valid number: ");
+            sc.next();
+        }
         int yearCreated = sc.nextInt();
-        System.out.println("Is the movie in color? (Yes/No)");
+
+
+
+
+        System.out.print("Is the movie in color? (Yes/No): ");
         String isInColor = sc.next().toLowerCase();
         while(!isInColor.equals("yes") && !isInColor.equals("no")) {
                 System.out.println("Unknown request, please try again. \"Hint (Yes / No)\"");
@@ -51,7 +62,13 @@ public class UserInterface {
                 }
         }
         System.out.print("How long is the movie (in minutes): ");
+        while (!sc.hasNextInt()) {
+            System.out.print("Invalid input. Please enter a valid number: ");
+            sc.next();
+        }
         int lengthInMinutes = sc.nextInt();
+
+
         System.out.print("In what genre type is the movie: ");
         String genre = sc.next();
         controller.addMovieToCollection(name,director,yearCreated,isInColor,lengthInMinutes,genre);
@@ -68,9 +85,10 @@ public class UserInterface {
     public void helpList(){
         System.out.println(
                 "Type [1, create] -> Create a movie.\n"+
-                "Type [2, exit] -> Exit the application.\n" +
+                "Type [2, search, s] -> Search for a movie.\n" +
                 "Type [3, list, l] -> List the movies.\n" +
-                "Type [4, help, h] -> Get a help list.");
+                "Type [4, help, h] -> Get a help list.\n" +
+                "Type [5, exit] -> Exit the application.\n");
     }
 
     public String getMovieDesc(Movie movieName) {
@@ -109,19 +127,19 @@ public class UserInterface {
         String hi = sc.nextLine();
         switch (hi)
         {
-            case "1":
+            case "1","name":
                 System.out.print("what should the new title be: ");
                 System.out.println(controller.EditMovie(film, "title", sc.nextLine()));
                 break;
-            case "2":
+            case "2","director":
                 System.out.print("who should the new director be: ");
                 System.out.println(controller.EditMovie(film, "director", sc.nextLine()));
                 break;
-            case "3":
+            case "3","year":
                 System.out.print("what is the new release year: ");
                 System.out.println(controller.EditMovie(film, "year", sc.nextLine()));
                 break;
-            case "4":
+            case "4","color":
                 while(true)
                 {
                     System.out.print("is it in color: ");
@@ -133,11 +151,11 @@ public class UserInterface {
                     }
                 }
                 break;
-            case "5" :
+            case "5","length" :
                 System.out.print("how long is the movie now: ");
                 System.out.println(controller.EditMovie(film, "length", sc.nextLine()));
                 break;
-            case "6":
+            case "6","genre":
                 System.out.print("what is the new genre: ");
                 System.out.println(controller.EditMovie(film, "genre", sc.nextLine()));
                 break;
