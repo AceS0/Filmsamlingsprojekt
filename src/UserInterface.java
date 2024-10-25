@@ -1,6 +1,5 @@
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -124,19 +123,19 @@ public class UserInterface {
         String hi = sc.nextLine();
         switch (hi)
         {
-            case "1":
+            case "1","name":
                 System.out.print("what should the new title be: ");
                 System.out.println(controller.EditMovie(film, "title", sc.nextLine()));
                 break;
-            case "2":
+            case "2","director":
                 System.out.print("who should the new director be: ");
                 System.out.println(controller.EditMovie(film, "director", sc.nextLine()));
                 break;
-            case "3":
+            case "3","year":
                 System.out.print("what is the new release year: ");
                 System.out.println(controller.EditMovie(film, "year", sc.nextLine()));
                 break;
-            case "4":
+            case "4","color":
                 while(true)
                 {
                     System.out.print("is it in color: ");
@@ -148,11 +147,11 @@ public class UserInterface {
                     }
                 }
                 break;
-            case "5" :
+            case "5","length" :
                 System.out.print("how long is the movie now: ");
                 System.out.println(controller.EditMovie(film, "length", sc.nextLine()));
                 break;
-            case "6":
+            case "6","genre":
                 System.out.print("what is the new genre: ");
                 System.out.println(controller.EditMovie(film, "genre", sc.nextLine()));
                 break;
