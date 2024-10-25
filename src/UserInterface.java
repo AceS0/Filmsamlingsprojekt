@@ -87,7 +87,11 @@ public class UserInterface {
         {
             if(found.size() == 1)
             {
-                editFilm(found.getFirst(), "placeholder" );
+                System.out.println("do you want to edit " + found.getFirst().getTitle());
+                String check =sc.nextLine();
+                if(check == "yes") {
+                    editFilm(found.getFirst(), "placeholder");
+                }
             }
             for (Movie movie : found) {
                 getMovieDesc(movie);
