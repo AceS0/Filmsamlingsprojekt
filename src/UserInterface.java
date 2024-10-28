@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
-    Controller controller = new Controller();
+   private Controller controller = new Controller();
 
 
     public void userInterface() {
@@ -93,10 +93,10 @@ public class UserInterface {
     }
 
     public void getMovieList(){
-        if (controller.movies.movieList() == null){
+        if (controller.getMovies().movieList() == null){
             System.out.println("\nThe list is empty, please create a movie.\n");
         } else {
-            System.out.println(controller.movies.movieList());
+            System.out.println(controller.getMovies().movieList());
         }
     }
 

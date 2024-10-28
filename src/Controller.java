@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Controller {
-    MovieCollection movies = new MovieCollection();
+    private MovieCollection movies = new MovieCollection();
     //Movie movie;
     public Controller(){
     }
@@ -42,4 +42,11 @@ public class Controller {
                 return null;
         }
     }
+
+    public MovieCollection getMovies(){
+        return movies;
+    }
+
+
+
 }
