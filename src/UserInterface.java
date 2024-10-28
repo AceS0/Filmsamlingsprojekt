@@ -11,14 +11,16 @@ public class UserInterface {
         Scanner sc = new Scanner(System.in);
 
         System.out.println(
-                "Welcome to your movie collection.\n"
-                +"1. Create a movie.\n"+
+                "Welcome to your movie collection.\n" +
+                "Below is your options: \n" +
+                "1. Create a movie.\n"+
                 "2. Search movie.\n" +
                 "3. List of the movies\n" +
                 "4. Get a help list.\n" +
                 "5. Exit");
         while (running) {
-            System.out.print("\nChoose an option: ");
+            System.out.print("Type \"help\", for a list of commands." +
+                    "\nChoose an option: \n");
             String userInput = sc.nextLine().toLowerCase();
             String[] splitPut = userInput.split(" ");
 
@@ -29,15 +31,16 @@ public class UserInterface {
                 case "list","l","3" -> getMovieList();
                 case "help", "h","4" -> helpList();
                 case "exit","5" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
-                default -> System.out.println("Unknown request, please try again.");
+                default -> System.out.println("Unknown request, please try again.\n" +
+                        "Type \"help\", for a list of commands.\"");
             }
-            System.out.println("Type \"help\", for a list of commands.");
+
         }
     }
 
     public void addMovieByUser() {
         Scanner sc = new Scanner(System.in);
-
+        System.out.println("You are creating a movie");
         System.out.print("What's the name of the movie: ");
         String name = sc.nextLine();
         System.out.print("Who is the director: ");
