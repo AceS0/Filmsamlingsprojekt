@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class UserInterface {
+public class UserInterface { 
     private Controller controller = new Controller();
 
 
@@ -13,6 +13,7 @@ public class UserInterface {
 
         System.out.println(
                 "Welcome to your movie collection.\n" +
+                "Below is your options: \n" +
                 "1. Create a movie.\n"+
                 "2. Search movie.\n" +
                 "3. List of the movies\n" +
@@ -20,7 +21,8 @@ public class UserInterface {
                 "5. Edit a movie\n" +
                 "6. Exit");
         while (running) {
-            System.out.print("\nChoose an option: ");
+            System.out.print("Type \"help\", for a list of commands." +
+                    "\nChoose an option: \n");
             String userInput = sc.nextLine().toLowerCase();
             String[] splitPut = userInput.split(" ");
             String command = splitPut[0];
@@ -50,13 +52,13 @@ public class UserInterface {
                     running = false;}
                 default -> System.out.println("Unknown request, please try again.");
             }
-            System.out.println("Type \"help\", for a list of commands.");
+
         }
     }
 
     public void addMovieByUser() {
         Scanner sc = new Scanner(System.in);
-
+        System.out.println("You are creating a movie.");
         System.out.print("What's the name of the movie: ");
         String name = sc.nextLine();
         System.out.print("Who is the director: ");
@@ -96,7 +98,7 @@ public class UserInterface {
         if (Objects.equals(controller.movies.movieList(), "")){
             System.out.println("\nThe list is empty, please create a movie.\n");
         } else {
-            System.out.println(controller.movies.movieList());
+            System.out.println(controller.getMovies().movieList());
         }
     }
 

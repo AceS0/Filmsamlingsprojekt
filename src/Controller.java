@@ -41,4 +41,11 @@ public class Controller {
                 return null;
         }
     }
+
+    public MovieCollection getMovies(){
+        return movies;
+    }
+
+
+
 }
