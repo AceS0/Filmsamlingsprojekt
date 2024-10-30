@@ -1,7 +1,5 @@
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class UserInterface { 
     private Controller controller = new Controller();
@@ -22,7 +20,7 @@ public class UserInterface {
                 "6. Exit");
         while (running) {
             System.out.print("Type \"help\", for a list of commands." +
-                    "\nChoose an option: \n");
+                    "\nChoose an option: ");
             String userInput = sc.nextLine().toLowerCase();
             String[] splitPut = userInput.split(" ");
             String command = splitPut[0];
@@ -141,11 +139,17 @@ public class UserInterface {
     }
 
     public void editMovie(String film){
-        ArrayList<Movie> found = controller.runSearch(film);
-        Scanner sc = new Scanner(System.in);
-        System.out.println("do you want to edit " + found.getFirst().getTitle());
-        if(sc.next().equalsIgnoreCase("yes")) {
-            editFilm(found.getFirst(), "placeholder");
+        try {
+            ArrayList<Movie> found = controller.runSearch(film);
+            Scanner sc = new Scanner(System.in);
+
+
+            System.out.println("do you want to edit " + found.getFirst().getTitle());
+            if (sc.next().equalsIgnoreCase("yes")) {
+                editFilm(found.getFirst(), "placeholder");
+            }
+        } catch (NoSuchElementException nsee ){
+            System.out.println("The movie was either not found or the movie collection is empty, please try again.");
         }
     }
 
@@ -203,7 +207,7 @@ public class UserInterface {
                 {
                         String input = sc.next();
                         if (input.matches(".*\\d.*")) {
-                            System.out.print("Something went wrong, try again: ");
+                            System.out.print("Invalid input, please try again: ");
                         } else {
                             System.out.println("The value has now been changed to: " + controller.EditMovie(film, "genre", input));
                             break;
