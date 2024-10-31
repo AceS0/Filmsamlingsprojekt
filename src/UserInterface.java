@@ -144,9 +144,19 @@ public class UserInterface {
             Scanner sc = new Scanner(System.in);
 
 
-            System.out.println("do you want to edit " + found.getFirst().getTitle());
-            if (sc.next().equalsIgnoreCase("yes")) {
-                editFilm(found.getFirst(), "placeholder");
+            System.out.println("Do you want to edit " + found.getFirst().getTitle());
+            String input = sc.next().toLowerCase();
+            while(true) {
+                if (input.equals("yes") || input.equals("y")) {
+                    editFilm(found.getFirst(), "placeholder");
+                    return;
+                } else if (input.equals("no") || input.equals("n")) {
+                    System.out.println("-> Returning back to menu.");
+                    return;
+                } else {
+                    System.out.print("Couldn't interpret the input, please enter \"Yes\" or \"No\": ");
+                    input = sc.next().toLowerCase();
+                }
             }
         } catch (NoSuchElementException nsee ){
             System.out.println("The movie was either not found or the movie collection is empty, please try again.");
@@ -156,17 +166,18 @@ public class UserInterface {
     public void editFilm(Movie film, String edit) {
         System.out.println(getMovieDesc(film));
         Scanner sc = new Scanner(System.in);
-        System.out.println("1. name, 2. director, 3. year, 4. color, 5. length, 6. genre");
+        System.out.println("0. exit, 1. name, 2. director, 3. year, 4. color, 5. length, 6. genre");
         switch (sc.next())
         {
+            case "0","exit":
+                System.out.println("-> Returning back to menu.");
+                break;
             case "1","name":
                 System.out.print("what should the new title be: ");
                 System.out.println(controller.EditMovie(film, "title", sc.nextLine()));
-                break;
             case "2","director":
                 System.out.print("who should the new director be: ");
                 System.out.println(controller.EditMovie(film, "director", sc.nextLine()));
-                break;
             case "3","year":
                 while(true)
                 {
@@ -177,7 +188,6 @@ public class UserInterface {
                         break;
                     }
                 }
-                break;
             case "4","color":
                 while(true)
                 {
@@ -189,7 +199,6 @@ public class UserInterface {
                         break;
                     }
                 }
-                break;
             case "5","length" :
                 while(true)
                 {
@@ -200,7 +209,6 @@ public class UserInterface {
                         break;
                     }
                 }
-                break;
             case "6","genre":
                 System.out.print("what is the new genre: ");
                 while(true)
@@ -210,11 +218,11 @@ public class UserInterface {
                             System.out.print("Invalid input, please try again: ");
                         } else {
                             System.out.println("The value has now been changed to: " + controller.EditMovie(film, "genre", input));
-                            break;
+                           break;
                         }
-
                 }
-                break;
+            default:
+                System.out.println("Invalid input, please try again.");
         }
     }
 }
