@@ -2,11 +2,19 @@ import java.util.ArrayList;
 
 public class MovieCollection {
     private ArrayList<Movie> collection = new ArrayList<>();
-    public void addMovie(Movie movie)
-    {
+
+
+    //Tilføjer film til arrraylist
+    public void addMovie(Movie movie) {
         collection.add(movie);
     }
+    //Fjerner film fra arraylist
+    public void removeMovie(int index){
+        collection.remove(collection.get(index));
+        //collection.remove(movie);
+    }
 
+    //Metode til at lave filmliste
     public String movieList() {
         String toPrint = "";
         int counter = 1;
@@ -18,6 +26,8 @@ public class MovieCollection {
         return toPrint;
     }
 
+
+    //Metode til at finde film
     public ArrayList<Movie> movieFinder(String searchTerm) {
         ArrayList<Movie> results = new ArrayList<Movie>();
         for (Movie movie : collection) {
