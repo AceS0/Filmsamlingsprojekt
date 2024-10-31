@@ -1,9 +1,8 @@
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
-public class UserInterface {
-   private Controller controller = new Controller();
+public class UserInterface { 
+    private Controller controller = new Controller();
 
 
     public void userInterface() {
@@ -52,7 +51,9 @@ public class UserInterface {
                         editMovie(sc.nextLine());
                     }
                 }
-                case "exit","7" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
+                case "exit","7" -> {
+                    System.out.println("Thank you for your time, hope to see you again.");
+                    running = false;}
                 default -> System.out.println("Unknown request, please try again.");
             }
 
@@ -61,7 +62,7 @@ public class UserInterface {
     //Metode til at tilføje en film:
     public void addMovieByUser() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("You are creating a movie");
+        System.out.println("You are creating a movie.");
         System.out.print("What's the name of the movie: ");
         String name = sc.nextLine();
         System.out.print("Who is the director: ");
@@ -72,14 +73,11 @@ public class UserInterface {
             sc.next();
         }
         int yearCreated = sc.nextInt();
-
-
-
-
         System.out.print("Is the movie in color? (Yes/No): ");
         String isInColor = sc.next().toLowerCase();
         while(!isInColor.equals("yes") && !isInColor.equals("no")) {
                 System.out.println("Unknown request, please try again. \"Hint (Yes / No)\"");
+                System.out.print("Type your request here: ");
                 isInColor = sc.next();
                 if (isInColor.equals("yes") || isInColor.equals("no")){
                     break;
@@ -87,13 +85,15 @@ public class UserInterface {
         }
         System.out.print("How long is the movie (in minutes): ");
         while (!sc.hasNextInt()) {
-            System.out.print("Invalid input. Please enter a valid number: ");
+            System.out.print("Invalid input, please enter a valid number: ");
             sc.next();
         }
         int lengthInMinutes = sc.nextInt();
-
-
         System.out.print("In what genre type is the movie: ");
+        while (sc.hasNextInt()) {
+            System.out.print("Invalid input, please enter a genre-type: ");
+            sc.next();
+        }
         String genre = sc.next();
         //Tilføjer filmen til MovieCollection:
         controller.addMovieToCollection(name,director,yearCreated,isInColor,lengthInMinutes,genre);
@@ -101,7 +101,7 @@ public class UserInterface {
 
     //Metode til at få listen på film
     public void getMovieList(){
-        if (controller.getMovies().movieList() == null){
+        if (Objects.equals(controller.movies.movieList(), "")){
             System.out.println("\nThe list is empty, please create a movie.\n");
         } else {
             System.out.println(controller.getMovies().movieList());
@@ -173,11 +173,17 @@ public class UserInterface {
     Forklaring: Hvis brugeren skriver [edit, 5], så vil programmet spørge ind til det man vil edit.
     */
     public void editMovie(String film){
-        ArrayList<Movie> found = controller.runSearch(film);
-        Scanner sc = new Scanner(System.in);
-        System.out.println("do you want to edit " + found.getFirst().getTitle());
-        if(sc.next().equalsIgnoreCase("yes")) {
-            editFilm(found.getFirst(), "placeholder");
+        try {
+            ArrayList<Movie> found = controller.runSearch(film);
+            Scanner sc = new Scanner(System.in);
+
+
+            System.out.println("do you want to edit " + found.getFirst().getTitle());
+            if (sc.next().equalsIgnoreCase("yes")) {
+                editFilm(found.getFirst(), "placeholder");
+            }
+        } catch (NoSuchElementException nsee ){
+            System.out.println("The movie was either not found or the movie collection is empty, please try again.");
         }
     }
     /*2.. metode til at redigere en film:
@@ -187,8 +193,7 @@ public class UserInterface {
         System.out.println(getMovieDesc(film));
         Scanner sc = new Scanner(System.in);
         System.out.println("1. name, 2. director, 3. year, 4. color, 5. length, 6. genre");
-        String hi = sc.nextLine();
-        switch (hi)
+        switch (sc.next())
         {
             case "1","name":
                 System.out.print("what should the new title be: ");
@@ -199,28 +204,52 @@ public class UserInterface {
                 System.out.println(controller.EditMovie(film, "director", sc.nextLine()));
                 break;
             case "3","year":
-                System.out.print("what is the new release year: ");
-                System.out.println(controller.EditMovie(film, "year", sc.nextLine()));
+                while(true)
+                {
+                    System.out.print("what is the new release year: ");
+                    if (sc.hasNextInt())
+                    {
+                        System.out.println("The value has now been changed to: " + controller.EditMovie(film, "year", String.valueOf(sc.nextInt())));
+                        break;
+                    }
+                }
                 break;
             case "4","color":
                 while(true)
                 {
                     System.out.print("is it in color: ");
-                    hi = sc.nextLine();
-                    if (hi.equals("yes") || hi.equals("no"))
+                    String input = sc.nextLine();
+                    if (input.equals("yes") || input.equals("no"))
                     {
-                        System.out.println(controller.EditMovie(film, "color", hi));
+                        System.out.println(controller.EditMovie(film, "color", input));
                         break;
                     }
                 }
                 break;
             case "5","length" :
-                System.out.print("how long is the movie now: ");
-                System.out.println(controller.EditMovie(film, "length", sc.nextLine()));
+                while(true)
+                {
+                    System.out.print("how long is the movie now: ");
+                    if (sc.hasNextInt())
+                    {
+                        System.out.println("The value has now been changed to: " + controller.EditMovie(film, "length", String.valueOf(sc.nextInt())));
+                        break;
+                    }
+                }
                 break;
             case "6","genre":
                 System.out.print("what is the new genre: ");
-                System.out.println(controller.EditMovie(film, "genre", sc.nextLine()));
+                while(true)
+                {
+                        String input = sc.next();
+                        if (input.matches(".*\\d.*")) {
+                            System.out.print("Invalid input, please try again: ");
+                        } else {
+                            System.out.println("The value has now been changed to: " + controller.EditMovie(film, "genre", input));
+                            break;
+                        }
+
+                }
                 break;
         }
     }
