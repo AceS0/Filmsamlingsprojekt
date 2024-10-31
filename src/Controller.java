@@ -4,28 +4,27 @@ public class Controller {
     private MovieCollection movies = new MovieCollection();
 
     public Controller(){
-    }
 
-//Controller kobler alle metoder fra andre klasser til UserInterface.
+    }
+    //Controller kobler alle metoder fra andre klasser til UserInterface.
     public void addMovieToCollection(String title, String director, int yearCreated, String isInColor, int lengthInMinutes, String genre) {
-       movies.addMovie(new Movie(title,director,yearCreated,isInColor,lengthInMinutes,genre));
+        movies.addMovie(new Movie(title, director, yearCreated, isInColor, lengthInMinutes, genre));
     }
 
-   // public void removeMovieFromCollection(String title, String director, int yearCreated, String isInColor, int lengthInMinutes, String genre){
-    public void removeMovieFromCollection(int index){
+    // public void removeMovieFromCollection(String title, String director, int yearCreated, String isInColor, int lengthInMinutes, String genre){
+    public void removeMovieFromCollection(int index) {
         movies.removeMovie(index);
         // movies.removeMovie(new Movie(title,director,yearCreated,isInColor,lengthInMinutes,genre));
     }
 
 
-    public ArrayList<Movie> runSearch(String searchTerm)
-    {
+    public ArrayList<Movie> runSearch(String searchTerm) {
         ArrayList<Movie> results = movies.movieFinder(searchTerm);
         return results;
     }
-    public String EditMovie(Movie movie, String gotcha, String edit)
-    {
-        switch (gotcha) {
+
+    public String EditMovie(Movie movie, String command, String edit) {
+        switch (command) {
             case "title":
                 movie.setTitle(edit);
                 return edit;
@@ -51,10 +50,8 @@ public class Controller {
         }
     }
 
-    public MovieCollection getMovies(){
+    public MovieCollection getMovies() {
         return movies;
     }
-
-
 
 }
