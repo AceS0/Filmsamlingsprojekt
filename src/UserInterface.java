@@ -32,12 +32,12 @@ public class UserInterface {
 
             //Switch på forskellige commands brugeren kan vælge
             switch (command) {
-                case "create", "1" -> addMovieByUser();
-                case "Remove", "2", "r" -> removeMovieByUser();
-                case "search", "s", "3" -> {
-                    if (splitPut.length > 1) {
-                        searchForFilm(splitPut[1]);
-                    } else {
+                case "create","c", "1" -> addMovieByUser();
+                case "remove", "r", "2" -> removeMovieByUser();
+                case "search", "s","3" -> {
+                    if (splitPut.length > 1){
+                    searchForFilm(splitPut[1]);
+                     } else {
                         System.out.print("insert search term: ");
                         searchForFilm(sc.next());
                     }
@@ -133,13 +133,13 @@ public class UserInterface {
     //Metode til Hjælpeguide.
     public void helpList() {
         System.out.println(
-                "Type [1, create] -> Create a movie.\n" +
-                        "Type [2, Remove, r] -> Remove a movie\n" +
-                        "Type [3, search, s] -> Search for a movie.\n" +
-                        "Type [4, list, l] -> List the movies.\n" +
-                        "Type [5, help, h] -> Get a help list.\n" +
-                        "Type [6, edit] -> Edit a movie.\n" +
-                        "Type [7, exit] -> Exit the application.\n");
+                "Type [1, create] -> Create a movie.\n"+
+                "Type [2, remove, r] -> Remove a movie\n"+
+                "Type [3, search, s] -> Search for a movie.\n" +
+                "Type [4, list, l] -> List the movies.\n" +
+                "Type [5, help, h] -> Get a help list.\n" +
+                "Type [6, edit] -> Edit a movie.\n"+
+                "Type [7, exit] -> Exit the application.\n");
     }
 
     //Metode til at få beskrivelse på filmen.
@@ -207,7 +207,7 @@ public class UserInterface {
             Scanner sc = new Scanner(System.in);
 
 
-            System.out.println("Do you want to edit " + found.getFirst().getTitle());
+            System.out.println("Do you want to edit '" + found.getFirst().getTitle()+"'? (yes/no)");
             String input = sc.next().toLowerCase();
             while (true) {
                 if (input.equals("yes") || input.equals("y")) {
