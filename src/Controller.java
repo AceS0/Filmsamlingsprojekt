@@ -23,9 +23,9 @@ public class Controller {
         ArrayList<Movie> results = movies.movieFinder(searchTerm);
         return results;
     }
-    public String EditMovie(Movie movie, String gotcha, String edit)
+    public String EditMovie(Movie movie, String descVariableToChange, String edit)
     {
-        switch (gotcha) {
+        switch (descVariableToChange) {
             case "title":
                 movie.setTitle(edit);
                 return edit;

@@ -31,8 +31,8 @@ public class UserInterface {
 
             //Switch på forskellige commands brugeren kan vælge
             switch (command) {
-                case "create","1" -> addMovieByUser();
-                case "Remove", "2", "r" -> removeMovieByUser();
+                case "create","c", "1" -> addMovieByUser();
+                case "remove", "r", "2" -> removeMovieByUser();
                 case "search", "s","3" -> {
                     if (splitPut.length > 1){
                     searchForFilm(splitPut[1]);
@@ -101,7 +101,7 @@ public class UserInterface {
 
     //Metode til at få listen på film
     public void getMovieList(){
-        if (Objects.equals(controller.movies.movieList(), "")){
+        if (Objects.equals(controller.getMovies().movieList(), "")){
             System.out.println("\nThe list is empty, please create a movie.\n");
         } else {
             System.out.println(controller.getMovies().movieList());
@@ -129,13 +129,13 @@ public class UserInterface {
     //Metode til Hjælpeguide.
     public void helpList(){
         System.out.println(
-                    "Type [1, create] -> Create a movie.\n"+
-                    "Type [2, Remove, r] -> Remove a movie\n"+
-                    "Type [3, search, s] -> Search for a movie.\n" +
-                    "Type [4, list, l] -> List the movies.\n" +
-                    "Type [5, help, h] -> Get a help list.\n" +
-                    "Type [6, edit] -> Edit a movie.\n" +
-                    "Type [7, exit] -> Exit the application.\n");
+                "Type [1, create] -> Create a movie.\n"+
+                "Type [2, remove, r] -> Remove a movie\n"+
+                "Type [3, search, s] -> Search for a movie.\n" +
+                "Type [4, list, l] -> List the movies.\n" +
+                "Type [5, help, h] -> Get a help list.\n" +
+                "Type [6, edit] -> Edit a movie.\n"+
+                "Type [7, exit] -> Exit the application.\n");
     }
 
     //Metode til at få beskrivelse på filmen.
@@ -178,7 +178,7 @@ public class UserInterface {
             Scanner sc = new Scanner(System.in);
 
 
-            System.out.println("Do you want to edit " + found.getFirst().getTitle());
+            System.out.println("Do you want to edit '" + found.getFirst().getTitle()+"'? (yes/no)");
             String input = sc.next().toLowerCase();
             while(true) {
                 if (input.equals("yes") || input.equals("y")) {
@@ -202,63 +202,60 @@ public class UserInterface {
     public void editFilm(Movie film, String edit) {
         System.out.println(getMovieDesc(film));
         Scanner sc = new Scanner(System.in);
+        String input;
+
         System.out.println("0. exit, 1. name, 2. director, 3. year, 4. color, 5. length, 6. genre");
-        switch (sc.next())
-        {
-            case "0","exit":
+        switch (sc.next()) {
+            case "1", "name":
+                System.out.print("What should the new title be: ");
+                System.out.println(controller.EditMovie(film, "title", sc.nextLine()));
+                break;
+            case "2", "director":
+                System.out.print("Who should the new director be: ");
+                input = sc.next();
+                if (input.matches(".*\\d.*")) {
+                    System.out.print("Invalid input, please try again: ");
+                    break;
+                } else {
+                    System.out.println(controller.EditMovie(film, "director", sc.next()));
+                } break;
+            case "3", "year":
+                System.out.print("What is the new release year: ");
+                if (sc.hasNextInt()) {
+                    System.out.println("The value has now been changed to: " + controller.EditMovie(film, "year", String.valueOf(sc.nextInt())));
+                    break;
+                } break;
+            case "4", "color":
+                System.out.print("Is it in color: ");
+                input = sc.next();
+                if (input.matches(".*\\d.*")) {
+                    System.out.print("Invalid input.");
+                } else if(input.equals("yes") || input.equals("no")) {
+                    System.out.println(controller.EditMovie(film, "color", input));
+                    break;
+                } break;
+            case "5","length" :
+                System.out.print("How long is the movie now: ");
+                if (sc.hasNextInt()) {
+                    System.out.println("The value has now been changed to: " + controller.EditMovie(film, "length", String.valueOf(sc.nextInt())));
+                    break;
+                } else {
+                    System.out.println("Invalid input. Enter only numbers!");
+                } break;
+            case "6","genre":
+                System.out.print("What is the new genre: ");
+                input = sc.next();
+                if (input.matches(".*\\d.*")) {
+                    System.out.print("Invalid input.");
+                } else {
+                    System.out.println("The value has now been changed to: " + controller.EditMovie(film, "genre", input));
+                    break;
+                } break;
+            case "7", "exit":
                 System.out.println("-> Returning back to menu.");
                 break;
-            case "1","name":
-                System.out.print("what should the new title be: ");
-                System.out.println(controller.EditMovie(film, "title", sc.nextLine()));
-            case "2","director":
-                System.out.print("who should the new director be: ");
-                System.out.println(controller.EditMovie(film, "director", sc.nextLine()));
-            case "3","year":
-                while(true)
-                {
-                    System.out.print("what is the new release year: ");
-                    if (sc.hasNextInt())
-                    {
-                        System.out.println("The value has now been changed to: " + controller.EditMovie(film, "year", String.valueOf(sc.nextInt())));
-                        break;
-                    }
-                }
-            case "4","color":
-                while(true)
-                {
-                    System.out.print("is it in color: ");
-                    String input = sc.nextLine();
-                    if (input.equals("yes") || input.equals("no"))
-                    {
-                        System.out.println(controller.EditMovie(film, "color", input));
-                        break;
-                    }
-                }
-            case "5","length" :
-                while(true)
-                {
-                    System.out.print("how long is the movie now: ");
-                    if (sc.hasNextInt())
-                    {
-                        System.out.println("The value has now been changed to: " + controller.EditMovie(film, "length", String.valueOf(sc.nextInt())));
-                        break;
-                    }
-                }
-            case "6","genre":
-                System.out.print("what is the new genre: ");
-                while(true)
-                {
-                        String input = sc.next();
-                        if (input.matches(".*\\d.*")) {
-                            System.out.print("Invalid input, please try again: ");
-                        } else {
-                            System.out.println("The value has now been changed to: " + controller.EditMovie(film, "genre", input));
-                           break;
-                        }
-                }
             default:
-                System.out.println("Invalid input, please try again.");
+                System.out.println("Invalid input.");
         }
     }
 }
