@@ -14,21 +14,27 @@ public class UserInterface {
                 "Welcome to your movie collection.\n" +
                 "Below is your options: \n" +
                 "1. Create a movie.\n"+
-                "2. Search movie.\n" +
-                "3. List of the movies\n" +
-                "4. Get a help list.\n" +
-                "5. Edit a movie\n" +
-                "6. Exit");
+                "2. Remove a movie.\n"+
+                "3. Search movie.\n" +
+                "4. List of the movies\n" +
+                "5. Get a help list.\n" +
+                "6. Edit a movie\n" +
+                "7. Exit");
+
         while (running) {
             System.out.print("Type \"help\", for a list of commands." +
-                    "\nChoose an option: \n");
+                    "\nChoose an option: ");
+            //Dette splitter brugerens input, som vi gør brug af i bla seacrh funktionen:
             String userInput = sc.nextLine().toLowerCase();
+            System.out.println();
             String[] splitPut = userInput.split(" ");
             String command = splitPut[0];
 
+            //Switch på forskellige commands brugeren kan vælge
             switch (command) {
                 case "create","1" -> addMovieByUser();
-                case "search", "s","2" -> {
+                case "Remove", "2", "r" -> removeMovieByUser();
+                case "search", "s","3" -> {
                     if (splitPut.length > 1){
                     searchForFilm(splitPut[1]);
                      } else {
@@ -36,9 +42,9 @@ public class UserInterface {
                         searchForFilm(sc.nextLine());
                     }
                 }
-                case "list","l","3" -> getMovieList();
-                case "help", "h","4" -> helpList();
-                case "edit", "5" -> {
+                case "list","l","4" -> getMovieList();
+                case "help", "h","5" -> helpList();
+                case "edit", "6" -> {
                     if (splitPut.length > 1){
                         editMovie(splitPut[1]);
                     } else {
@@ -46,13 +52,13 @@ public class UserInterface {
                         editMovie(sc.nextLine());
                     }
                 }
-                case "exit","6" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
+                case "exit","7" -> {System.out.println("Thank you for your time, hope to see you again."); return;}
                 default -> System.out.println("Unknown request, please try again.");
             }
 
         }
     }
-
+    //Metode til at tilføje en film:
     public void addMovieByUser() {
         Scanner sc = new Scanner(System.in);
         System.out.println("You are creating a movie");
@@ -89,9 +95,11 @@ public class UserInterface {
 
         System.out.print("In what genre type is the movie: ");
         String genre = sc.next();
+        //Tilføjer filmen til MovieCollection:
         controller.addMovieToCollection(name,director,yearCreated,isInColor,lengthInMinutes,genre);
     }
 
+    //Metode til at få listen på film
     public void getMovieList(){
         if (controller.getMovies().movieList() == null){
             System.out.println("\nThe list is empty, please create a movie.\n");
@@ -99,22 +107,45 @@ public class UserInterface {
             System.out.println(controller.getMovies().movieList());
         }
     }
+//metode til at fjerne en film
+    public void removeMovieByUser(){
+        Scanner sc = new Scanner(System.in);
+        //print liste af film til brugeren
+        System.out.println(controller.getMovies().movieList());
+        System.out.println("Which movie do you want to remove?");
+        System.out.print("Type here: ");
 
+       while (true){
+           try{
+               int input = sc.nextInt();
+               controller.removeMovieFromCollection(input-1);
+           }catch (Exception e){
+               System.out.println("Invalid input, try again:(");
+               removeMovieByUser();
+           }
+       }
+   }
+
+    //Metode til Hjælpeguide.
     public void helpList(){
         System.out.println(
                     "Type [1, create] -> Create a movie.\n"+
-                    "Type [2, search, s] -> Search for a movie.\n" +
-                    "Type [3, list, l] -> List the movies.\n" +
-                    "Type [4, help, h] -> Get a help list.\n" +
-                    "Type [5, edit] -> Edit a movie.\n" +
-                    "Type [6, exit] -> Exit the application.\n");
+                    "Type [2, Remove, r] -> Remove a movie\n"+
+                    "Type [3, search, s] -> Search for a movie.\n" +
+                    "Type [4, list, l] -> List the movies.\n" +
+                    "Type [5, help, h] -> Get a help list.\n" +
+                    "Type [6, edit] -> Edit a movie.\n" +
+                    "Type [7, exit] -> Exit the application.\n");
     }
 
+    //Metode til at få beskrivelse på filmen.
     public String getMovieDesc(Movie movieName) {
         return ("\nTitle: "+movieName.getTitle()+"\nDirector: "+movieName.getDirector()+
                 "\nRelease year: "+movieName.getYearCreated()+"\nIn color: "+movieName.getIsInColor()+
                 "\nLength (in minutes): "+movieName.getLengthInMinutes()+"\nGenre: "+movieName.getGenre()+"\n");
     }
+
+    //Metode til at søge efter en film
     public void searchForFilm(String film) {
         ArrayList<Movie> found = controller.runSearch(film);
         if(found != null)
@@ -138,6 +169,9 @@ public class UserInterface {
 
     }
 
+    /*1. metode til at redigere en film:
+    Forklaring: Hvis brugeren skriver [edit, 5], så vil programmet spørge ind til det man vil edit.
+    */
     public void editMovie(String film){
         ArrayList<Movie> found = controller.runSearch(film);
         Scanner sc = new Scanner(System.in);
@@ -146,7 +180,9 @@ public class UserInterface {
             editFilm(found.getFirst(), "placeholder");
         }
     }
-
+    /*2.. metode til at redigere en film:
+    Forklaring: Modsat 1. metode i edit kan man her direkte skrive "edit (filmnavn)"
+     */
     public void editFilm(Movie film, String edit) {
         System.out.println(getMovieDesc(film));
         Scanner sc = new Scanner(System.in);
