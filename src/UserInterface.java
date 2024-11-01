@@ -38,8 +38,6 @@ public class UserInterface {
                     case "create", "c", "1" -> addMovieByUser();
                     case "remove", "r", "2" -> {
                         if (splitPut.length > 1) {
-                            System.out.println("Here is a list of movies: ");
-                            getMovieListShort();
                             removeMovieByUser(splitPut[1]);
                         } else {
                             System.out.println("Here is a list of movies: ");
@@ -130,24 +128,27 @@ public class UserInterface {
     }
 
     public void removeMovieByUser(String inputs) {
-        ;
         Scanner sc = new Scanner(System.in);
         ArrayList<Movie> found = controller.runSearch(inputs);
-        for (Movie movie : found) {
-            if (found.size() == 1) {
-                System.out.println("You have succesfully removed " + movie.getTitle());
-                controller.removeMovieFromCollection(movie);
-            } else if (found.size() >= 2) {
-                System.out.println("\nHere is a list of movies: ");
-                getMovieListShort();
-                System.out.println("Which movie do you want to remove?");
-                System.out.print("Type here: ");
-                inputs = sc.nextLine();
-                removeMovieByUser(inputs);
-            } else {
-                System.out.println("The movie doesn't exist, please try again. ");
+        if (found.isEmpty()) {
+            System.out.println("The movie doesn't exist, please create the movie if needed.");
+        } else {
+            for (Movie movie : found) {
+                if (found.size() == 1) {
+                    System.out.println("You have succesfully removed " + movie.getTitle());
+                    controller.removeMovieFromCollection(movie);
+                } else if (found.size() >= 2) {
+                    System.out.println("\nHere is a list of movies: ");
+                    getMovieListShort();
+                    System.out.println("Which movie do you want to remove?");
+                    System.out.print("Type here: ");
+                    inputs = sc.nextLine();
+                    removeMovieByUser(inputs);
+                } else {
+                    System.out.println("The movie doesn't exist, please try again.");
+                }
+
             }
-            break;
         }
 
 
@@ -194,12 +195,14 @@ public class UserInterface {
     public void searchForFilm(String film) {
         ArrayList<Movie> found = controller.runSearch(film);
         Scanner sc = new Scanner(System.in);
-        if (found != null) {
+        if (found.isEmpty()) {
+            System.out.println("The movie you searched for does not exist, please try again.");
+        } else {
             if (found.size() == 1) {
                 for (Movie movie : found) {
                     System.out.println(getMovieDesc(movie));
                 }
-                System.out.println("Do you want to edit " + found.getFirst().getTitle() +"? HINT \"Yes\" or \"No\"");
+                System.out.println("Do you want to edit " + found.getFirst().getTitle() + "? HINT \"Yes\" or \"No\"");
                 System.out.print("Type here: ");
                 String input = sc.next().toLowerCase();
                 while (true) {
@@ -231,16 +234,17 @@ public class UserInterface {
                     }
                 }
                 if (found.size() == 0) {
-                    System.out.println("Couldn't reach the movie, please try again. ");
+                    System.out.println("Couldn't reach the movie, please try again or to exit type \"quit\". ");
                     System.out.print("Type here: ");
                     input = sc.nextLine();
-                    searchForFilm(input);
+                    if (input.equals("quit") || input.equals("exit")){
+                        userInterface();
+                    } else {
+                        searchForFilm(input);
+                    }
                 }
-            } else {
-                System.out.println("The movie does not exist, please try again.");}
-        } else {
-            System.out.println("The movie you searched for does not exist, please try again.");}
-
+            }
+        }
     }
 
     /*1. metode til at redigere en film:
