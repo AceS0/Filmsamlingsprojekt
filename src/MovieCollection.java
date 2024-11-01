@@ -53,5 +53,7 @@ public class MovieCollection {
         return results;
     }
 
-
+    public ArrayList<Movie> getCollection() {
+        return collection;
+    }
 }
