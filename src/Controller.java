@@ -12,9 +12,8 @@ public class Controller {
     }
 
     // public void removeMovieFromCollection(String title, String director, int yearCreated, String isInColor, int lengthInMinutes, String genre){
-    public void removeMovieFromCollection(int index) {
-        movies.removeMovie(index);
-        // movies.removeMovie(new Movie(title,director,yearCreated,isInColor,lengthInMinutes,genre));
+    public void removeMovieFromCollection(Movie movie){
+        movies.removeMovie(movie);
     }
 
 

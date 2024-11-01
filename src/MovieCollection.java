@@ -15,9 +15,8 @@ public class MovieCollection {
     }
 
     //Fjerner film fra arraylist
-    public void removeMovie(int index) {
-        collection.remove(collection.get(index));
-        //collection.remove(movie);
+    public void removeMovie(Movie movie) {
+        collection.remove(movie);
     }
 
     //Metode til at lave filmliste
@@ -30,6 +29,15 @@ public class MovieCollection {
                     "\nLength (in minutes): " + movie.getLengthInMinutes() + "\nGenre: " + movie.getGenre() + "\n");
         }
         return toPrint;
+    }
+
+    public String movieListShort(){
+            String toPrint = "";
+            int counter = 1;
+            for (Movie movie : collection) {
+                toPrint += ("\nMovie " + counter++ + ": \nTitle: " + movie.getTitle());
+            }
+            return toPrint;
     }
 
 

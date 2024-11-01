@@ -1,4 +1,7 @@
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -9,7 +12,7 @@ public class UserInterface {
     public void userInterface() {
         boolean running = true;
         Scanner sc = new Scanner(System.in);
-
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println(
                 "Welcome to your movie collection.\n" +
                         "Below is your options: \n" +
@@ -22,52 +25,76 @@ public class UserInterface {
                         "7. Exit");
 
         while (running) {
-            System.out.print("Type \"help\", for a list of commands." +
-                    "\nChoose an option: ");
-            //Dette splitter brugerens input, som vi gør brug af i bla seacrh funktionen:
-            String userInput = sc.nextLine().toLowerCase();
-            System.out.println();
-            String[] splitPut = userInput.split(" ");
-            String command = splitPut[0];
+            try {
+                System.out.print("\nType \"help\", for a list of commands." +
+                        "\nChoose an option: ");
+                //Dette splitter brugerens input, som vi gør brug af i bla seacrh funktionen:
+                String userInput = br.readLine().toLowerCase();
+                String[] splitPut = userInput.split(" ");
+                String command = splitPut[0];
 
-            //Switch på forskellige commands brugeren kan vælge
-            switch (command) {
-                case "create","c", "1" -> addMovieByUser();
-                case "remove", "r", "2" -> removeMovieByUser();
-                case "search", "s","3" -> {
-                    if (splitPut.length > 1){
-                    searchForFilm(splitPut[1]);
-                     } else {
-                        System.out.print("insert search term: ");
-                        searchForFilm(sc.next());
+                //Switch på forskellige commands brugeren kan vælge
+                switch (command) {
+                    case "create", "c", "1" -> addMovieByUser();
+                    case "remove", "r", "2" -> {
+                        if (splitPut.length > 1) {
+                            System.out.println("Here is a list of movies: ");
+                            getMovieListShort();
+                            removeMovieByUser(splitPut[1]);
+                        } else {
+                            System.out.println("Here is a list of movies: ");
+                            getMovieListShort();
+                            System.out.println("Insert the movie you want to remove.");
+                            System.out.print("Type here: ");
+                            removeMovieByUser(sc.next());
+                        }
                     }
-                }
-                case "list", "l", "4" -> getMovieList();
-                case "help", "h", "5" -> helpList();
-                case "edit", "6" -> {
-                    if (splitPut.length > 1) {
-                        editMovie(splitPut[1]);
-                    } else {
-                        System.out.print("Insert the movie you want to edit: ");
-                        editMovie(sc.next());
+                    case "search", "s", "3" -> {
+                        if (splitPut.length > 1) {
+                            searchForFilm(splitPut[1]);
+                        } else {
+                            System.out.print("insert search term: ");
+                            searchForFilm(sc.next());
+                        }
                     }
+                    case "list", "l", "4" -> getMovieList();
+                    case "help", "h", "5" -> helpList();
+                    case "edit", "6" -> {
+                        if (splitPut.length > 1) {
+                            editMovie(splitPut[1]);
+                        } else {
+                            System.out.print("Insert the movie you want to edit: ");
+                            editMovie(sc.next());
+                        }
+                    }
+                    case "exit", "7" -> {
+                        System.out.println("Thank you for your time, hope to see you again.");
+                        running = false;
+                    }
+                    default -> System.out.println("Unknown request, please try again.");
                 }
-                case "exit", "7" -> {
-                    System.out.println("Thank you for your time, hope to see you again.");
-                    running = false;
-                }
-                default -> System.out.println("Unknown request, please try again.");
+            } catch (ArrayIndexOutOfBoundsException | IOException aioobe) {
+                System.out.println("Unknown request, please try again.");
             }
-
         }
     }
 
     //Metode til at tilføje en film:
     public void addMovieByUser() {
+
         Scanner sc = new Scanner(System.in);
         System.out.println("You are creating a movie.");
         System.out.print("What's the name of the movie: ");
-        String name = sc.nextLine();
+        String input = sc.nextLine();
+        ArrayList<Movie> found = controller.runSearch(input);
+        for (Movie movie : found) {
+            if (!found.isEmpty()) {
+                System.out.println("The movie you're trying to create already exists, try adding to the name.");
+                System.out.print("Type here: ");
+                input = sc.nextLine();
+            }
+        }
+
         System.out.print("Who is the director: ");
         String director = sc.nextLine();
         System.out.print("Which year was the movie released: ");
@@ -99,7 +126,31 @@ public class UserInterface {
         }
         String genre = sc.next();
         //Tilføjer filmen til MovieCollection:
-        controller.addMovieToCollection(name, director, yearCreated, isInColor, lengthInMinutes, genre);
+        controller.addMovieToCollection(input, director, yearCreated, isInColor, lengthInMinutes, genre);
+    }
+
+    public void removeMovieByUser(String inputs) {
+        ;
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Movie> found = controller.runSearch(inputs);
+        for (Movie movie : found) {
+            if (found.size() == 1) {
+                System.out.println("You have succesfully removed " + movie.getTitle());
+                controller.removeMovieFromCollection(movie);
+            } else if (found.size() >= 2) {
+                System.out.println("\nHere is a list of movies: ");
+                getMovieListShort();
+                System.out.println("Which movie do you want to remove?");
+                System.out.print("Type here: ");
+                inputs = sc.nextLine();
+                removeMovieByUser(inputs);
+            } else {
+                System.out.println("The movie doesn't exist, please try again. ");
+            }
+            break;
+        }
+
+
     }
 
     //Metode til at få listen på film
@@ -111,35 +162,25 @@ public class UserInterface {
         }
     }
 
-    //metode til at fjerne en film
-    public void removeMovieByUser() {
-        Scanner sc = new Scanner(System.in);
-        //print liste af film til brugeren
-        System.out.println(controller.getMovies().movieList());
-        System.out.println("Which movie do you want to remove?");
-        System.out.print("Type here: ");
-
-        while (true) {
-            try {
-                int input = sc.nextInt();
-                controller.removeMovieFromCollection(input - 1);
-            } catch (Exception e) {
-                System.out.println("Invalid input, try again:(");
-                removeMovieByUser();
-            }
+    public void getMovieListShort() {
+        if (Objects.equals(controller.getMovies().movieListShort(), "")) {
+            System.out.println("\nThe list is empty, please create a movie.\n");
+        } else {
+            System.out.println(controller.getMovies().movieListShort());
         }
     }
+
 
     //Metode til Hjælpeguide.
     public void helpList() {
         System.out.println(
-                "Type [1, create] -> Create a movie.\n"+
-                "Type [2, remove, r] -> Remove a movie\n"+
-                "Type [3, search, s] -> Search for a movie.\n" +
-                "Type [4, list, l] -> List the movies.\n" +
-                "Type [5, help, h] -> Get a help list.\n" +
-                "Type [6, edit] -> Edit a movie.\n"+
-                "Type [7, exit] -> Exit the application.\n");
+                "Type [1, create] -> Create a movie.\n" +
+                        "Type [2, remove, r] -> Remove a movie\n" +
+                        "Type [3, search, s] -> Search for a movie.\n" +
+                        "Type [4, list, l] -> List the movies.\n" +
+                        "Type [5, help, h] -> Get a help list.\n" +
+                        "Type [6, edit] -> Edit a movie.\n" +
+                        "Type [7, exit] -> Exit the application.\n");
     }
 
     //Metode til at få beskrivelse på filmen.
@@ -152,14 +193,14 @@ public class UserInterface {
     //Metode til at søge efter en film
     public void searchForFilm(String film) {
         ArrayList<Movie> found = controller.runSearch(film);
-
         Scanner sc = new Scanner(System.in);
         if (found != null) {
             if (found.size() == 1) {
                 for (Movie movie : found) {
                     System.out.println(getMovieDesc(movie));
                 }
-                System.out.println("do you want to edit " + found.getFirst().getTitle());
+                System.out.println("Do you want to edit " + found.getFirst().getTitle() +"? HINT \"Yes\" or \"No\"");
+                System.out.print("Type here: ");
                 String input = sc.next().toLowerCase();
                 while (true) {
                     if (input.equals("yes") || input.equals("y")) {
@@ -182,20 +223,23 @@ public class UserInterface {
                 System.out.println(toPrint);
                 System.out.println("Which movie do you want to get more details about?");
                 System.out.print("Type here: ");
-
+                String input = sc.nextLine();
+                found = controller.runSearch(input);
                 for (Movie movie : found) {
-                    String inputs = sc.nextLine();
-                    if (inputs.equals(movie.getTitle())) {
-                        searchForFilm(inputs);
-                    } else {
-                        System.out.println("The movie doesn't exist, please try again. ");
+                    if (!found.isEmpty()) {
+                        searchForFilm(input);
                     }
-                    break;
                 }
-            }
+                if (found.size() == 0) {
+                    System.out.println("Couldn't reach the movie, please try again. ");
+                    System.out.print("Type here: ");
+                    input = sc.nextLine();
+                    searchForFilm(input);
+                }
+            } else {
+                System.out.println("The movie does not exist, please try again.");}
         } else {
-            System.out.println("Movie could not be found");
-        }
+            System.out.println("The movie you searched for does not exist, please try again.");}
 
     }
 
@@ -207,7 +251,7 @@ public class UserInterface {
             Scanner sc = new Scanner(System.in);
 
 
-            System.out.println("Do you want to edit '" + found.getFirst().getTitle()+"'? (yes/no)");
+            System.out.println("Do you want to edit '" + found.getFirst().getTitle() + "'? (yes/no)");
             String input = sc.next().toLowerCase();
             while (true) {
                 if (input.equals("yes") || input.equals("y")) {
