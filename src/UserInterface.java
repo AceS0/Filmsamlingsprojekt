@@ -130,24 +130,46 @@ public class UserInterface {
     public void removeMovieByUser(String inputs) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Movie> found = controller.runSearch(inputs);
-        if (found.isEmpty()) {
-            System.out.println("The movie doesn't exist, please create the movie if needed.");
+        if (found.isEmpty() | found.size() == 0) {
+            System.out.println("\nThe movie doesn't exist, please create the movie if needed.\n");
+            userInterface();
         } else {
             for (Movie movie : found) {
                 if (found.size() == 1) {
-                    System.out.println("You have succesfully removed " + movie.getTitle());
+                    System.out.println("You have succesfully removed " + movie.getTitle() +"\n");
                     controller.removeMovieFromCollection(movie);
-                } else if (found.size() >= 2) {
-                    System.out.println("\nHere is a list of movies: ");
-                    getMovieListShort();
-                    System.out.println("Which movie do you want to remove?");
-                    System.out.print("Type here: ");
-                    inputs = sc.nextLine();
-                    removeMovieByUser(inputs);
-                } else {
-                    System.out.println("The movie doesn't exist, please try again.");
+                    userInterface();
                 }
-
+            } while(true) { if (found.size() >= 2) {
+                        System.out.println("\nHere is a list of movies: ");
+                        String toPrint = "";
+                        int counter = 1;
+                        for (Movie movie : found) {
+                        toPrint += ("\nMovie " + counter++ + ": \nTitle: " + movie.getTitle());
+                        }
+                        System.out.println(toPrint);
+                        System.out.println("Which movie do you want to remove?");
+                        System.out.print("Type here: ");
+                        inputs = sc.nextLine();
+                        found = controller.runSearch(inputs);
+                        for (Movie movie : found) {
+                            if (found.size() == 1) {
+                                System.out.println("You have succesfully removed " + movie.getTitle());
+                                controller.removeMovieFromCollection(movie);
+                                return;
+                            }
+                        }
+                        if (found.size() == 0 || found.isEmpty()) {
+                            System.out.println("The movie doesn't exist, please try again or to leave type \"exit\" or \"quit\".");
+                            System.out.print("Type here: ");
+                            String input = sc.nextLine();
+                            if (input.equals("quit") || input.equals("exit")) {
+                                return;
+                            } else {
+                                removeMovieByUser(input);
+                            }
+                        }
+                    }
             }
         }
 
@@ -198,6 +220,7 @@ public class UserInterface {
         if (found.isEmpty()) {
             System.out.println("The movie you searched for does not exist, please try again.");
         } else {
+
             if (found.size() == 1) {
                 for (Movie movie : found) {
                     System.out.println(getMovieDesc(movie));
@@ -205,6 +228,7 @@ public class UserInterface {
                 System.out.println("Do you want to edit " + found.getFirst().getTitle() + "? HINT \"Yes\" or \"No\"");
                 System.out.print("Type here: ");
                 String input = sc.next().toLowerCase();
+
                 while (true) {
                     if (input.equals("yes") || input.equals("y")) {
                         editFilm(found.getFirst(), "placeholder");
@@ -217,24 +241,30 @@ public class UserInterface {
                         input = sc.next().toLowerCase();
                     }
                 }
-            } else if (found.size() >= 2) {
+
+
+            } else {
+
                 String toPrint = "";
                 int counter = 1;
                 for (Movie movie : found) {
                     toPrint += ("\nMovie " + counter++ + ": \nTitle: " + movie.getTitle());
                 }
+
                 System.out.println(toPrint);
                 System.out.println("Which movie do you want to get more details about?");
                 System.out.print("Type here: ");
                 String input = sc.nextLine();
                 found = controller.runSearch(input);
+
                 for (Movie movie : found) {
                     if (!found.isEmpty()) {
                         searchForFilm(input);
                     }
                 }
-                if (found.size() == 0) {
-                    System.out.println("Couldn't reach the movie, please try again or to exit type \"quit\". ");
+
+                if (found.isEmpty()) {
+                    System.out.println("Couldn't reach the movie, please try again or to leave type \"exit\" or \"quit\". ");
                     System.out.print("Type here: ");
                     input = sc.nextLine();
                     if (input.equals("quit") || input.equals("exit")){
@@ -244,6 +274,7 @@ public class UserInterface {
                     }
                 }
             }
+
         }
     }
 
