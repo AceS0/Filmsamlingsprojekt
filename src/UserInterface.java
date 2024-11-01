@@ -136,40 +136,42 @@ public class UserInterface {
         } else {
             for (Movie movie : found) {
                 if (found.size() == 1) {
-                    System.out.println("You have succesfully removed " + movie.getTitle() +"\n");
+                    System.out.println("You have succesfully removed " + movie.getTitle() + "\n");
                     controller.removeMovieFromCollection(movie);
                     userInterface();
                 }
-            } while(true) { if (found.size() >= 2) {
-                        System.out.println("\nHere is a list of movies: ");
-                        String toPrint = "";
-                        int counter = 1;
-                        for (Movie movie : found) {
+            }
+            while (true) {
+                if (found.size() >= 2) {
+                    System.out.println("\nHere is a list of movies: ");
+                    String toPrint = "";
+                    int counter = 1;
+                    for (Movie movie : found) {
                         toPrint += ("\nMovie " + counter++ + ": \nTitle: " + movie.getTitle());
-                        }
-                        System.out.println(toPrint);
-                        System.out.println("Which movie do you want to remove?");
-                        System.out.print("Type here: ");
-                        inputs = sc.nextLine();
-                        found = controller.runSearch(inputs);
-                        for (Movie movie : found) {
-                            if (found.size() == 1) {
-                                System.out.println("You have succesfully removed " + movie.getTitle());
-                                controller.removeMovieFromCollection(movie);
-                                return;
-                            }
-                        }
-                        if (found.size() == 0 || found.isEmpty()) {
-                            System.out.println("The movie doesn't exist, please try again or to leave type \"exit\" or \"quit\".");
-                            System.out.print("Type here: ");
-                            String input = sc.nextLine();
-                            if (input.equals("quit") || input.equals("exit")) {
-                                return;
-                            } else {
-                                removeMovieByUser(input);
-                            }
+                    }
+                    System.out.println(toPrint);
+                    System.out.println("Which movie do you want to remove?");
+                    System.out.print("Type here: ");
+                    inputs = sc.nextLine();
+                    found = controller.runSearch(inputs);
+                    for (Movie movie : found) {
+                        if (found.size() == 1) {
+                            System.out.println("You have succesfully removed " + movie.getTitle());
+                            controller.removeMovieFromCollection(movie);
+                            return;
                         }
                     }
+                    if (found.size() == 0 || found.isEmpty()) {
+                        System.out.println("The movie doesn't exist, please try again or to leave type \"exit\" or \"quit\".");
+                        System.out.print("Type here: ");
+                        String input = sc.nextLine();
+                        if (input.equals("quit") || input.equals("exit")) {
+                            return;
+                        } else {
+                            removeMovieByUser(input);
+                        }
+                    }
+                }
             }
         }
 
@@ -267,7 +269,7 @@ public class UserInterface {
                     System.out.println("Couldn't reach the movie, please try again or to leave type \"exit\" or \"quit\". ");
                     System.out.print("Type here: ");
                     input = sc.nextLine();
-                    if (input.equals("quit") || input.equals("exit")){
+                    if (input.equals("quit") || input.equals("exit")) {
                         userInterface();
                     } else {
                         searchForFilm(input);
