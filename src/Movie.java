@@ -1,4 +1,5 @@
-public class Movie{
+public class Movie {
+    //Attributter
     private String title;
     private String director;
     private int yearCreated;
@@ -6,31 +7,45 @@ public class Movie{
     private int lengthInMinutes;
     private String genre;
 
-    public Movie(String title, String director, int yearCreated, String isInColor, int lengthInMinutes, String genre){
-    this.title = title;
-    this.director = director;
-    this.yearCreated = yearCreated;
-    this.isInColor = isInColor;
-    this.lengthInMinutes = lengthInMinutes;
-    this.genre = genre;
+    //Konstruktør
+    public Movie(String title, String director, int yearCreated, String isInColor, int lengthInMinutes, String genre) {
+        this.title = title;
+        this.director = director;
+        this.yearCreated = yearCreated;
+        this.isInColor = isInColor;
+        this.lengthInMinutes = lengthInMinutes;
+        this.genre = genre;
     }
 
-    public String getTitle(){
+    public Movie(){
+
+    }
+
+
+
+//-----------------------------------------------------Getter/Setter--------------------------------------------------//
+
+    public String getTitle() {
         return title;
     }
-    public String getDirector(){
-    return director;
+
+    public String getDirector() {
+        return director;
     }
-    public int getYearCreated(){
+
+    public int getYearCreated() {
         return yearCreated;
     }
-    public String getIsInColor(){
+
+    public String getIsInColor() {
         return isInColor;
     }
-    public int getLengthInMinutes(){
+
+    public int getLengthInMinutes() {
         return lengthInMinutes;
     }
-    public String getGenre(){
+
+    public String getGenre() {
         return genre;
     }
 
