@@ -2,11 +2,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class UserInterface {
-    private Controller controller = new Controller();
+    private final Controller controller = new Controller();
 
 
     public void userInterface() {
@@ -14,21 +13,25 @@ public class UserInterface {
         Scanner sc = new Scanner(System.in);
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println(
-                "Welcome to your movie collection.\n" +
-                        "Below is your options: \n" +
-                        "1. Create a movie.\n" +
-                        "2. Remove a movie.\n" +
-                        "3. Search movie.\n" +
-                        "4. List of the movies\n" +
-                        "5. Get a help list.\n" +
-                        "6. Edit a movie\n" +
-                        "7. Exit");
+                """
+                        Welcome to your movie collection.
+                        Below is your options:\s
+                        1. Create a movie.
+                        2. Remove a movie.
+                        3. Search movie.
+                        4. List of the movies
+                        5. Get a help list.
+                        6. Edit a movie
+                        7. Exit""");
 
         while (running) {
             try {
-                System.out.print("\nType \"help\", for a list of commands." +
-                        "\nChoose an option: ");
-                //Dette splitter brugerens input, som vi gør brug af i bla seacrh funktionen:
+                System.out.print("""
+                        
+                        Type "help", for a list of commands.\
+                        
+                        Choose an option:\s""");
+                //Dette splitter brugerens input, som vi gør brug af i bla search funktionen:
                 String userInput = br.readLine().toLowerCase();
                 String[] splitPut = userInput.split(" ");
                 String command = splitPut[0];
@@ -85,7 +88,7 @@ public class UserInterface {
         System.out.print("What's the name of the movie: ");
         String input = sc.nextLine();
         ArrayList<Movie> found = controller.runSearch(input);
-        for (Movie movie : found) {
+        for (Movie ignored : found) {
             if (!found.isEmpty()) {
                 System.out.println("The movie you're trying to create already exists, try adding to the name.");
                 System.out.print("Type here: ");
@@ -130,13 +133,13 @@ public class UserInterface {
     public void removeMovieByUser(String inputs) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Movie> found = controller.runSearch(inputs);
-        if (found.isEmpty() | found.size() == 0) {
+        if (found.isEmpty() || found.size() == 0) {
             System.out.println("\nThe movie doesn't exist, please create the movie if needed.\n");
             userInterface();
         } else {
             for (Movie movie : found) {
                 if (found.size() == 1) {
-                    System.out.println("You have succesfully removed " + movie.getTitle() + "\n");
+                    System.out.println("You have successfully removed " + movie.getTitle() + "\n");
                     controller.removeMovieFromCollection(movie);
                     userInterface();
                 }
@@ -144,10 +147,10 @@ public class UserInterface {
             while (true) {
                 if (found.size() >= 2) {
                     System.out.println("\nHere is a list of movies: ");
-                    String toPrint = "";
+                    StringBuilder toPrint = new StringBuilder();
                     int counter = 1;
                     for (Movie movie : found) {
-                        toPrint += ("\nMovie " + counter++ + ": \nTitle: " + movie.getTitle());
+                        toPrint.append("\nMovie ").append(counter++).append(": \nTitle: ").append(movie.getTitle());
                     }
                     System.out.println(toPrint);
                     System.out.println("Which movie do you want to remove?");
@@ -156,7 +159,7 @@ public class UserInterface {
                     found = controller.runSearch(inputs);
                     for (Movie movie : found) {
                         if (found.size() == 1) {
-                            System.out.println("You have succesfully removed " + movie.getTitle());
+                            System.out.println("You have successfully removed " + movie.getTitle());
                             controller.removeMovieFromCollection(movie);
                             return;
                         }
@@ -199,13 +202,15 @@ public class UserInterface {
     //Metode til Hjælpeguide.
     public void helpList() {
         System.out.println(
-                "Type [1, create] -> Create a movie.\n" +
-                        "Type [2, remove, r] -> Remove a movie\n" +
-                        "Type [3, search, s] -> Search for a movie.\n" +
-                        "Type [4, list, l] -> List the movies.\n" +
-                        "Type [5, help, h] -> Get a help list.\n" +
-                        "Type [6, edit] -> Edit a movie.\n" +
-                        "Type [7, exit] -> Exit the application.\n");
+                """
+                        Type [1, create] -> Create a movie.
+                        Type [2, remove, r] -> Remove a movie
+                        Type [3, search, s] -> Search for a movie.
+                        Type [4, list, l] -> List the movies.
+                        Type [5, help, h] -> Get a help list.
+                        Type [6, edit] -> Edit a movie.
+                        Type [7, exit] -> Exit the application.
+                        """);
     }
 
     //Metode til at få beskrivelse på filmen.
@@ -247,10 +252,10 @@ public class UserInterface {
 
             } else {
 
-                String toPrint = "";
+                StringBuilder toPrint = new StringBuilder();
                 int counter = 1;
                 for (Movie movie : found) {
-                    toPrint += ("\nMovie " + counter++ + ": \nTitle: " + movie.getTitle());
+                    toPrint.append("\nMovie ").append(counter++).append(": \nTitle: ").append(movie.getTitle());
                 }
 
                 System.out.println(toPrint);
@@ -259,7 +264,7 @@ public class UserInterface {
                 String input = sc.nextLine();
                 found = controller.runSearch(input);
 
-                for (Movie movie : found) {
+                for (Movie ignored : found) {
                     if (!found.isEmpty()) {
                         searchForFilm(input);
                     }
