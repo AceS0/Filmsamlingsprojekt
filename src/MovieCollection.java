@@ -7,28 +7,30 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MovieCollection {
-    private ArrayList<Movie> collection = new ArrayList<>(List.of(
-            new Movie("Life of Enes", "Anas", 2024, false, 140, "DRAMA"),
+    private ArrayList<Movie> collection = new ArrayList<Movie>();
+        //List.of(
+            /*new Movie("Life of Enes", "Anas", 2024, false, 140, "DRAMA"),
             new Movie("Life of Anas", "Enes", 2024, false, 140, "DRAMA"),
             new Movie("LifeIs", "Enes", 2024, false, 140, "DRAMA"),
             new Movie("batman", "julemand", 2022, false, 200, "yikes"),
-            new Movie("LifeWas", "Enes", 2024, false, 140, "DRAMA")));
+            new Movie("LifeWas", "Enes", 2024, false, 140, "DRAMA")));*/
 
 
     //Tilføjer film til arrraylist
     public void addMovie(Movie movie) {
-            collection.add(movie);
+        collection.add(movie);
+        saveMovieFile();
 
     }
 
     //Fjerner film fra arraylist
     public void removeMovie(Movie movie) {
         collection.remove(movie);
+        saveMovieFile();
     }
 
     //Metode til at lave filmliste
-    public String movieList()
-    {
+    public String movieList() {
         String toPrint = "";
         int counter = 1;
         for (Movie movie : collection) {
@@ -38,8 +40,8 @@ public class MovieCollection {
         }
         return toPrint;
     }
-    public String movieList(String term1)
-    {
+
+    public String movieList(String term1) {
         String toPrint = "";
         int counter = 1;
         sortBy(term1);
@@ -84,11 +86,11 @@ public class MovieCollection {
                 "\nLength (in minutes): " + movieName.getLengthInMinutes() + "\nGenre: " + movieName.getGenre() + "\n");
     }
 
-    public void saveMovieFile(){
+    public void saveMovieFile() {
         try {
             FileWriter writer = new FileWriter("save.txt");
 
-            for (Movie movie : collection ){
+            for (Movie movie : collection) {
                 writer.write(getMovieDesc(movie));
                 writer.append("\n");
             }
@@ -105,21 +107,21 @@ public class MovieCollection {
             FileReader reader = new FileReader("save.txt");
             Scanner sc = null;
             int data = reader.read();
-            while(data != -1) {
-                System.out.print((char)data);
+            while (data != -1) {
+                System.out.print((char) data);
                 data = reader.read();
             }
             System.out.println();
             sc = new Scanner("save.txt");
             sc.nextLine();
-            while (sc.hasNext()){
+            while (sc.hasNext()) {
                 String line = sc.nextLine();
                 String[] attributes = line.split(": ");
 
 
-                datae = new Movie((attributes[0]),(attributes[1]),
-                        (Integer.parseInt(attributes[2])),(Boolean.parseBoolean(attributes[3])),
-                        (Integer.parseInt(attributes[4])),(attributes[5]));
+                datae = new Movie((attributes[0]), (attributes[1]),
+                        (Integer.parseInt(attributes[2])), (Boolean.parseBoolean(attributes[3])),
+                        (Integer.parseInt(attributes[4])), (attributes[5]));
                 collection.add(datae);
             }
 
@@ -131,15 +133,15 @@ public class MovieCollection {
             throw new RuntimeException(e);
         }
     }
+
     //sorterer film ifølge term
-    public void sortBy(String term){
-        switch (term)
-        {
-            case "director"-> collection.sort(Movie.DIRECTOR_COMPARATOR);
-            case "release"-> collection.sort(Movie.RELEASE_COMPARATOR);
-            case "color"-> collection.sort(Movie.COLOR_COMPARATOR);
-            case "length"-> collection.sort(Movie.LENGTH_COMPARATOR);
-            case "genre"-> collection.sort(Movie.GENRE_COMPARATOR);
+    public void sortBy(String term) {
+        switch (term) {
+            case "director" -> collection.sort(Movie.DIRECTOR_COMPARATOR);
+            case "release" -> collection.sort(Movie.RELEASE_COMPARATOR);
+            case "color" -> collection.sort(Movie.COLOR_COMPARATOR);
+            case "length" -> collection.sort(Movie.LENGTH_COMPARATOR);
+            case "genre" -> collection.sort(Movie.GENRE_COMPARATOR);
             default -> collection.sort(Movie.TITLE_COMPARATOR);
         }
     }

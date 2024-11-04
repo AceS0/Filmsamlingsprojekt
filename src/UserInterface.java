@@ -8,6 +8,7 @@ public class UserInterface {
 
 
     public void userInterface() {
+        controller.runLoad();
         controller.getMovies().movieList();
         boolean running = true;
         Scanner sc = new Scanner(System.in);
