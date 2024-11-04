@@ -55,6 +55,7 @@ public class Controller {
         movies.saveMovieFile();
     }
 
-
-
+    public void runLoad(){
+        movies.loadMovieFile();
+    }
 }

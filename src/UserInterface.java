@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,6 +8,7 @@ public class UserInterface {
 
 
     public void userInterface() {
+        controller.getMovies().movieList();
         boolean running = true;
         Scanner sc = new Scanner(System.in);
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,7 +23,8 @@ public class UserInterface {
                         5. Get a help list.
                         6. Edit a movie.
                         7. Save to a file.
-                        8. Exit""");
+                        8. Load file.
+                        9. Exit""");
 
         while (running) {
             try {
@@ -70,8 +71,8 @@ public class UserInterface {
                         }
                     }
                     case "save", "7" -> controller.runSave();
-
-                    case "exit", "8" -> {
+                    case "load", "8" -> controller.runLoad();
+                    case "exit", "9" -> {
                         System.out.println("Thank you for your time, hope to see you again.");
                         running = false;
                     }
@@ -180,8 +181,6 @@ public class UserInterface {
                 }
             }
         }
-
-
     }
 
     //Metode til at få listen på film
@@ -201,7 +200,6 @@ public class UserInterface {
         }
     }
 
-
     //Metode til Hjælpeguide.
     public void helpList() {
         System.out.println(
@@ -213,7 +211,8 @@ public class UserInterface {
                         Type [5, help, h] -> Get a help list.
                         Type [6, edit] -> Edit a movie.
                         Type [7, savefile] -> Save movie in a file.txt.
-                        Type [8, exit] -> Exit the application.
+                        Type [8, loadfile] -> Load the file.txt.
+                        Type [9, exit] -> Exit the application.
                         """);
     }
 
@@ -253,9 +252,7 @@ public class UserInterface {
                     }
                 }
 
-
             } else {
-
                 StringBuilder toPrint = new StringBuilder();
                 int counter = 1;
                 for (Movie movie : found) {

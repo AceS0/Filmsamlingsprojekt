@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,17 +79,20 @@ public class MovieCollection {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void loadMovieFile() {
+        try {
+            FileReader reader = new FileReader("save.txt");
+            int data = reader.read();
+            while(data != -1) {
+                System.out.print((char)data);
+                data = reader.read();
+            }
+            System.out.println();
+            reader.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
