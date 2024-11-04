@@ -1,14 +1,22 @@
-public class Movie {
+import java.util.Comparator;
+
+public class Movie implements Comparable {
     //Attributter
     private String title;
     private String director;
     private int yearCreated;
-    private String isInColor;
+    private boolean isInColor;
     private int lengthInMinutes;
     private String genre;
+    public static Comparator<Movie> TITLE_COMPARATOR = Comparator.comparing(Movie::getTitle);
+    public static Comparator<Movie> DIRECTOR_COMPARATOR = Comparator.comparing(Movie::getDirector);
+    public static Comparator<Movie> RELEASE_COMPARATOR = Comparator.comparing(Movie::getYearCreated);
+    public static Comparator<Movie> COLOR_COMPARATOR = Comparator.comparing(Movie::getIsInColor);
+    public static Comparator<Movie> LENGTH_COMPARATOR = Comparator.comparing(Movie:: getLengthInMinutes);
+    public static Comparator<Movie> GENRE_COMPARATOR = Comparator.comparing(Movie::getGenre);
 
     //Konstruktør
-    public Movie(String title, String director, int yearCreated, String isInColor, int lengthInMinutes, String genre) {
+    public Movie(String title, String director, int yearCreated, boolean isInColor, int lengthInMinutes, String genre) {
         this.title = title;
         this.director = director;
         this.yearCreated = yearCreated;
@@ -16,6 +24,11 @@ public class Movie {
         this.lengthInMinutes = lengthInMinutes;
         this.genre = genre;
     }
+
+    public Movie(){
+
+    }
+
 
 
 //-----------------------------------------------------Getter/Setter--------------------------------------------------//
@@ -32,7 +45,7 @@ public class Movie {
         return yearCreated;
     }
 
-    public String getIsInColor() {
+    public boolean getIsInColor() {
         return isInColor;
     }
 
@@ -56,7 +69,7 @@ public class Movie {
         this.genre = genre;
     }
 
-    public void setIsInColor(String isInColor) {
+    public void setIsInColor(boolean isInColor) {
         this.isInColor = isInColor;
     }
 
@@ -66,5 +79,10 @@ public class Movie {
 
     public void setYearCreated(int yearCreated) {
         this.yearCreated = yearCreated;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }

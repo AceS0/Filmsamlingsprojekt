@@ -60,7 +60,14 @@ public class UserInterface {
                             searchForFilm(sc.next());
                         }
                     }
-                    case "list", "l", "4" -> getMovieList();
+                    case "list", "l", "4" -> {
+                        if (splitPut.length > 1) {
+                            getMovieList(splitPut[1]);
+                        } else {
+                            getMovieList("title");
+                        }
+                    }
+
                     case "help", "h", "5" -> helpList();
                     case "edit", "6" -> {
                         if (splitPut.length > 1) {
@@ -110,11 +117,14 @@ public class UserInterface {
         int yearCreated = sc.nextInt();
         System.out.print("Is the movie in color? (Yes/No): ");
         String isInColor = sc.next().toLowerCase();
+        boolean isInColorBool = true;
         while (!isInColor.equals("yes") && !isInColor.equals("no")) {
             System.out.println("Unknown request, please try again. \"Hint (Yes / No)\"");
             System.out.print("Type your request here: ");
             isInColor = sc.next();
             if (isInColor.equals("yes") || isInColor.equals("no")) {
+                if (isInColor.equals("yes")) isInColorBool = true;
+                if (isInColor.equals("no")) isInColorBool = false;
                 break;
             }
         }
@@ -131,7 +141,7 @@ public class UserInterface {
         }
         String genre = sc.next();
         //Tilføjer filmen til MovieCollection:
-        controller.addMovieToCollection(input, director, yearCreated, isInColor, lengthInMinutes, genre);
+        controller.addMovieToCollection(input, director, yearCreated, isInColorBool, lengthInMinutes, genre);
     }
 
     public void removeMovieByUser(String inputs) {
@@ -184,11 +194,11 @@ public class UserInterface {
     }
 
     //Metode til at få listen på film
-    public void getMovieList() {
-        if (Objects.equals(controller.getMovies().movieList(), "")) {
+    public void getMovieList(String sortTerm) {
+        if (Objects.equals(controller.getMovies().movieList(sortTerm), "")) {
             System.out.println("\nThe list is empty, please create a movie.\n");
         } else {
-            System.out.println(controller.getMovies().movieList());
+            System.out.println(controller.getMovies().movieList(sortTerm));
         }
     }
 

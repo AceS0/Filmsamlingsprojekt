@@ -5,7 +5,7 @@ public class Controller {
 
 
     //Controller kobler alle metoder fra andre klasser til UserInterface.
-    public void addMovieToCollection(String title, String director, int yearCreated, String isInColor, int lengthInMinutes, String genre) {
+    public void addMovieToCollection(String title, String director, int yearCreated, boolean isInColor, int lengthInMinutes, String genre) {
         movies.addMovie(new Movie(title, director, yearCreated, isInColor, lengthInMinutes, genre));
     }
 
@@ -33,7 +33,9 @@ public class Controller {
                 movie.setYearCreated(Integer.parseInt(editnum));
                 return edit;
             case "color":
-                movie.setIsInColor(edit);
+                if (edit.equalsIgnoreCase("yes")) {
+                    movie.setIsInColor(true);
+                }else movie.setIsInColor(false);
                 return edit;
             case "length":
                 String editnum2 = edit.replaceAll("[^0-9]", "");
