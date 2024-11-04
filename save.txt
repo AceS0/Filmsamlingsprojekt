@@ -1,8 +1,48 @@
 
-Title: Al-Sheikh al-Allaama Abdulcelil Sekerci al-Kurdiy
-Director: Enes kardes
-Release year: 2009
+Title: Life of Enes
+Director: Anas
+Release year: 2024
+In color: no
+Length (in minutes): 140
+Genre: DRAMA
+
+
+Title: Life of Anas
+Director: Enes
+Release year: 2024
+In color: no
+Length (in minutes): 140
+Genre: DRAMA
+
+
+Title: LifeIs
+Director: Enes
+Release year: 2024
+In color: no
+Length (in minutes): 140
+Genre: DRAMA
+
+
+Title: LifeWas
+Director: Enes
+Release year: 2024
+In color: no
+Length (in minutes): 140
+Genre: DRAMA
+
+
+Title: abdul
+Director: s
+Release year: 1
 In color: yes
-Length (in minutes): 190
-Genre: læ
+Length (in minutes): 1
+Genre: horror
+
+
+Title: life of abdul
+Director: 1
+Release year: 1
+In color: yes
+Length (in minutes): 1
+Genre: horror
 

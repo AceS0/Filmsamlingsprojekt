@@ -245,7 +245,7 @@ public class UserInterface {
                         return;
                     } else if (input.equals("no") || input.equals("n")) {
                         System.out.println("-> Returning back to menu.");
-                        return;
+                        userInterface();
                     } else {
                         System.out.print("Couldn't interpret the input, please enter \"Yes\" or \"No\": ");
                         input = sc.next().toLowerCase();
