@@ -3,15 +3,13 @@ import java.util.ArrayList;
 public class Controller {
     private MovieCollection movies = new MovieCollection();
 
-    public Controller(){
 
-    }
     //Controller kobler alle metoder fra andre klasser til UserInterface.
     public void addMovieToCollection(String title, String director, int yearCreated, String isInColor, int lengthInMinutes, String genre) {
         movies.addMovie(new Movie(title, director, yearCreated, isInColor, lengthInMinutes, genre));
     }
 
-    // public void removeMovieFromCollection(String title, String director, int yearCreated, String isInColor, int lengthInMinutes, String genre){
+
     public void removeMovieFromCollection(Movie movie){
         movies.removeMovie(movie);
     }
@@ -52,5 +50,11 @@ public class Controller {
     public MovieCollection getMovies() {
         return movies;
     }
+
+    public void runSave(){
+        movies.saveMovieFile();
+    }
+
+
 
 }

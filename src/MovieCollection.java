@@ -1,12 +1,10 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MovieCollection {
-    private ArrayList<Movie> collection = new ArrayList<>(List.of(
-            new Movie("Life of Enes", "Anas", 2024, "no", 140, "DRAMA"),
-            new Movie("Life of Anas", "Enes", 2024, "no", 140, "DRAMA"),
-            new Movie("LifeIs", "Enes", 2024, "no", 140, "DRAMA"),
-            new Movie("LifeWas", "Enes", 2024, "no", 140, "DRAMA")));
+    private ArrayList<Movie> collection = new ArrayList<>();
 
 
     //Tilføjer film til arrraylist
@@ -56,4 +54,40 @@ public class MovieCollection {
     public ArrayList<Movie> getCollection() {
         return collection;
     }
+
+    //Metode til at få beskrivelse på filmen.
+    public String getMovieDesc(Movie movieName) {
+        return ("\nTitle: " + movieName.getTitle() + "\nDirector: " + movieName.getDirector() +
+                "\nRelease year: " + movieName.getYearCreated() + "\nIn color: " + movieName.getIsInColor() +
+                "\nLength (in minutes): " + movieName.getLengthInMinutes() + "\nGenre: " + movieName.getGenre() + "\n");
+    }
+
+    public void saveMovieFile(){
+        try {
+            FileWriter writer = new FileWriter("save.txt");
+
+            for (Movie movie : collection ){
+                writer.write(getMovieDesc(movie));
+                writer.append("\n");
+            }
+            writer.close();
+            System.out.println("You have succesfully saved your movie(s) to a save.txt");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

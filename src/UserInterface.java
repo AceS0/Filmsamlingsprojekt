@@ -21,8 +21,9 @@ public class UserInterface {
                         3. Search movie.
                         4. List of the movies
                         5. Get a help list.
-                        6. Edit a movie
-                        7. Exit""");
+                        6. Edit a movie.
+                        7. Save to a file.
+                        8. Exit""");
 
         while (running) {
             try {
@@ -68,7 +69,9 @@ public class UserInterface {
                             editMovie(sc.next());
                         }
                     }
-                    case "exit", "7" -> {
+                    case "save", "7" -> controller.runSave();
+
+                    case "exit", "8" -> {
                         System.out.println("Thank you for your time, hope to see you again.");
                         running = false;
                     }
@@ -209,7 +212,8 @@ public class UserInterface {
                         Type [4, list, l] -> List the movies.
                         Type [5, help, h] -> Get a help list.
                         Type [6, edit] -> Edit a movie.
-                        Type [7, exit] -> Exit the application.
+                        Type [7, savefile] -> Save movie in a file.txt.
+                        Type [8, exit] -> Exit the application.
                         """);
     }
 
