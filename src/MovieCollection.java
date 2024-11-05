@@ -17,12 +17,14 @@ public class MovieCollection {
     //Tilføjer film til arrraylist
     public void addMovie(Movie movie) {
         collection.add(movie);
+        saveMovieFile();
 
     }
 
     //Fjerner film fra arraylist
     public void removeMovie(Movie movie) {
         collection.remove(movie);
+        saveMovieFile();
     }
 
     //Metode til at lave filmliste
@@ -87,42 +89,8 @@ public class MovieCollection {
 
     public String saveMovieFile() {
         File file = new File("save.txt");
-        BufferedReader reader = null;
-        ArrayList<Movie> temp = new ArrayList<>();
         try {
-            reader = new BufferedReader(new FileReader(file) );
-            StringBuilder out = new StringBuilder();
-            String headerLine = reader.readLine();
-            String line = reader.readLine();
-            String[] attributes = line.split(";");
-            Movie checkFile = null;
-            while (checkFile == null) {
-                for (Movie movie : collection){
-                    checkFile = new Movie((attributes[0]), (attributes[1]),
-                            (Integer.parseInt(attributes[2])), (attributes[3]),
-                            (Integer.parseInt(attributes[4])), (attributes[5]));
-                    temp.add(checkFile);
-                }
-                out.append(line);   // add everything to StringBuilder
-                // here you can have your logic of comparison.
-            }
-
-            if (compareList(collection, temp)){
-
-            } else {
-                return "Doesn't work";
-            }
-
-            if (line == null){
-                return "Please create a movie and try again.";
-            }
-        } catch (FileNotFoundException e) {
-        } catch (IOException e) {
-        } catch (NullPointerException e) {}
-
-
-        try {
-                FileWriter writer = new FileWriter("save.txt");
+                FileWriter writer = new FileWriter(file);
                 writer.write("Title,Director,Year created,Is it in color?,Length in minutes,Genre.\n");
                 for (Movie movie : collection) {
                     writer.write(getMovieDesc(movie));
@@ -141,9 +109,7 @@ public class MovieCollection {
         try {
             sc = new Scanner(file);
             sc.nextLine();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+
         Movie checkFile = null;
         while (sc.hasNext()) {
             String line = sc.nextLine();
@@ -151,13 +117,24 @@ public class MovieCollection {
 
 
             checkFile = new Movie((attributes[0]), (attributes[1]),
-                    (Integer.parseInt(attributes[2])), (attributes[3]),
+                    (Integer.parseInt(attributes[2])), (Boolean.parseBoolean(attributes[3])),
                     (Integer.parseInt(attributes[4])), (attributes[5]));
-            if (!collection.contains(checkFile)) {
-                collection.add(checkFile);
+
+            Boolean duplicate = false;
+            for(Movie movie : collection){
+                 if (movie.getTitle().equals(checkFile.getTitle())){
+                     duplicate = true;
+                     break;
+                 }
             }
+             if (!duplicate){
+                 collection.add(checkFile);
+             }
         }
-        sc.close();
+            sc.close();
+        } catch (FileNotFoundException e) {
+        } catch (NullPointerException e){
+        } catch (NoSuchElementException e){}
         return "\nLoaded successfully.";
     }
 

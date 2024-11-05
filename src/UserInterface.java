@@ -124,7 +124,6 @@ public class UserInterface {
             System.out.print("Type your request here: ");
             isInColor = sc.next();
             if (isInColor.equals("yes") || isInColor.equals("no")) {
-                if (isInColor.equals("yes")) isInColorBool = true;
                 if (isInColor.equals("no")) isInColorBool = false;
                 break;
             }
@@ -148,7 +147,7 @@ public class UserInterface {
     public void removeMovieByUser(String inputs) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Movie> found = controller.runSearch(inputs);
-        if (found.isEmpty() || found.size() == 0) {
+        if (found.isEmpty()) {
             System.out.println("\nThe movie doesn't exist, please create the movie if needed.\n");
             userInterface();
         } else {
