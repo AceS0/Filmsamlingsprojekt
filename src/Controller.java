@@ -60,4 +60,8 @@ public class Controller {
     public void runLoad(){
         movies.loadMovieFile();
     }
+
+    public void runDeleteFile(){
+        movies.deleteFile();
+    }
 }

@@ -1,19 +1,11 @@
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class MovieCollection {
-    private ArrayList<Movie> collection = new ArrayList<Movie>();
-        //List.of(
-            /*new Movie("Life of Enes", "Anas", 2024, false, 140, "DRAMA"),
-            new Movie("Life of Anas", "Enes", 2024, false, 140, "DRAMA"),
-            new Movie("LifeIs", "Enes", 2024, false, 140, "DRAMA"),
-            new Movie("batman", "julemand", 2022, false, 200, "yikes"),
-            new Movie("LifeWas", "Enes", 2024, false, 140, "DRAMA")));*/
+    private ArrayList<Movie> collection = new ArrayList<>();
+
 
 
     //Tilføjer film til arrraylist
@@ -128,9 +120,7 @@ public class MovieCollection {
 
             reader.close();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -144,6 +134,12 @@ public class MovieCollection {
             case "genre" -> collection.sort(Movie.GENRE_COMPARATOR);
             default -> collection.sort(Movie.TITLE_COMPARATOR);
         }
+    }
+
+    public String deleteFile(){
+       File file = new File("save.txt");
+       return "You have deleted a file " + file.delete();
+
     }
 
 

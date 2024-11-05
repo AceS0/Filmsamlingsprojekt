@@ -25,7 +25,8 @@ public class UserInterface {
                         6. Edit a movie.
                         7. Save to a file.
                         8. Load file.
-                        9. Exit""");
+                        9. delete a file.
+                        10. Exit""");
 
         while (running) {
             try {
@@ -80,7 +81,8 @@ public class UserInterface {
                     }
                     case "save", "7" -> controller.runSave();
                     case "load", "8" -> controller.runLoad();
-                    case "exit", "9" -> {
+                    case "delete", "9" -> controller.runDeleteFile();
+                    case "exit", "10" -> {
                         System.out.println("Thank you for your time, hope to see you again.");
                         running = false;
                     }
@@ -223,7 +225,8 @@ public class UserInterface {
                         Type [6, edit] -> Edit a movie.
                         Type [7, savefile] -> Save movie in a file.txt.
                         Type [8, loadfile] -> Load the file.txt.
-                        Type [9, exit] -> Exit the application.
+                        Type [9, delete] -> Delete the file.txt.
+                        Type [10, exit] -> Exit the application.
                         """);
     }
 
