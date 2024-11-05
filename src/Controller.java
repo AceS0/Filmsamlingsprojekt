@@ -53,12 +53,12 @@ public class Controller {
         return movies;
     }
 
-    public void runSave(){
-        movies.saveMovieFile();
+    public String runSave(){
+        return movies.saveMovieFile();
     }
 
-    public void runLoad(){
-        movies.loadMovieFile();
+    public String runLoad(){
+        return movies.loadMovieFile();
     }
 
     public void runDeleteFile(){

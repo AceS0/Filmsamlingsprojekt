@@ -79,8 +79,8 @@ public class UserInterface {
                             editMovie(sc.next());
                         }
                     }
-                    case "save", "7" -> controller.runSave();
-                    case "load", "8" -> controller.runLoad();
+                    case "save", "7" -> saveMovie();
+                    case "load", "8" -> loadMovie();
                     case "delete", "9" -> controller.runDeleteFile();
                     case "exit", "10" -> {
                         System.out.println("Thank you for your time, hope to see you again.");
@@ -126,7 +126,6 @@ public class UserInterface {
             System.out.print("Type your request here: ");
             isInColor = sc.next();
             if (isInColor.equals("yes") || isInColor.equals("no")) {
-                if (isInColor.equals("yes")) isInColorBool = true;
                 if (isInColor.equals("no")) isInColorBool = false;
                 break;
             }
@@ -150,7 +149,7 @@ public class UserInterface {
     public void removeMovieByUser(String inputs) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Movie> found = controller.runSearch(inputs);
-        if (found.isEmpty() || found.size() == 0) {
+        if (found.isEmpty()) {
             System.out.println("\nThe movie doesn't exist, please create the movie if needed.\n");
             userInterface();
         } else {
@@ -393,5 +392,12 @@ public class UserInterface {
                     break;
             }
         }
+    }
+
+    public void loadMovie(){
+        System.out.println(controller.runLoad());
+    }
+    public void saveMovie(){
+        System.out.println(controller.runSave());
     }
 }

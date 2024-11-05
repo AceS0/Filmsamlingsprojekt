@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class MovieCollection {
@@ -73,55 +74,63 @@ public class MovieCollection {
 
     //Metode til at få beskrivelse på filmen.
     public String getMovieDesc(Movie movieName) {
-        return ("\nTitle: " + movieName.getTitle() + "\nDirector: " + movieName.getDirector() +
-                "\nRelease year: " + movieName.getYearCreated() + "\nIn color: " + movieName.getIsInColor() +
-                "\nLength (in minutes): " + movieName.getLengthInMinutes() + "\nGenre: " + movieName.getGenre() + "\n");
+        return (movieName.getTitle() + ";" + movieName.getDirector() +
+                ";" + movieName.getYearCreated() + ";" + movieName.getIsInColor() +
+                ";" + movieName.getLengthInMinutes() + ";" + movieName.getGenre());
+    }
+    public static boolean compareList(ArrayList ls1, ArrayList ls2){
+        return ls1.toString().contentEquals(ls2.toString())?true:false;
     }
 
-    public void saveMovieFile() {
+    public String saveMovieFile() {
+        File file = new File("save.txt");
         try {
-            FileWriter writer = new FileWriter("save.txt");
-
-            for (Movie movie : collection) {
-                writer.write(getMovieDesc(movie));
-                writer.append("\n");
+                FileWriter writer = new FileWriter(file);
+                writer.write("Title,Director,Year created,Is it in color?,Length in minutes,Genre.\n");
+                for (Movie movie : collection) {
+                    writer.write(getMovieDesc(movie));
+                    writer.append("\n");
+                }
+                writer.close();
+                return "\"You have succesfully saved your movie(s) to a save.txt\"";
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            writer.close();
-            System.out.println("You have succesfully saved your movie(s) to a save.txt");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
-    public void loadMovieFile() {
-        Movie datae = null;
+    public String loadMovieFile() {
+        File file = new File("save.txt");
+        Scanner sc = null;
         try {
-            FileReader reader = new FileReader("save.txt");
-            Scanner sc = null;
-            int data = reader.read();
-            while (data != -1) {
-                System.out.print((char) data);
-                data = reader.read();
-            }
-            System.out.println();
-            sc = new Scanner("save.txt");
+            sc = new Scanner(file);
             sc.nextLine();
-            while (sc.hasNext()) {
-                String line = sc.nextLine();
-                String[] attributes = line.split(": ");
+
+        Movie checkFile = null;
+        while (sc.hasNext()) {
+            String line = sc.nextLine();
+            String[] attributes = line.split(";");
 
 
-                datae = new Movie((attributes[0]), (attributes[1]),
-                        (Integer.parseInt(attributes[2])), (Boolean.parseBoolean(attributes[3])),
-                        (Integer.parseInt(attributes[4])), (attributes[5]));
-                collection.add(datae);
+            checkFile = new Movie((attributes[0]), (attributes[1]),
+                    (Integer.parseInt(attributes[2])), (Boolean.parseBoolean(attributes[3])),
+                    (Integer.parseInt(attributes[4])), (attributes[5]));
+
+            Boolean duplicate = false;
+            for(Movie movie : collection){
+                 if (movie.getTitle().equals(checkFile.getTitle())){
+                     duplicate = true;
+                     break;
+                 }
             }
-
-
-            reader.close();
-        } catch (FileNotFoundException e) {
-        } catch (IOException e) {
+             if (!duplicate){
+                 collection.add(checkFile);
+             }
         }
+            sc.close();
+        } catch (FileNotFoundException e) {
+        } catch (NullPointerException e){
+        } catch (NoSuchElementException e){}
+        return "\nLoaded successfully.";
     }
 
     //sorterer film ifølge term
