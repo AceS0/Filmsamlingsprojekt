@@ -70,8 +70,8 @@ public class UserInterface {
                             editMovie(sc.next());
                         }
                     }
-                    case "save", "7" -> controller.runSave();
-                    case "load", "8" -> controller.runLoad();
+                    case "save", "7" -> saveMovie();
+                    case "load", "8" -> loadMovie();
                     case "exit", "9" -> {
                         System.out.println("Thank you for your time, hope to see you again.");
                         running = false;
@@ -379,5 +379,12 @@ public class UserInterface {
                     break;
             }
         }
+    }
+
+    public void loadMovie(){
+        System.out.println(controller.runLoad());
+    }
+    public void saveMovie(){
+        System.out.println(controller.runSave());
     }
 }
