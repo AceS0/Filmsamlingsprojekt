@@ -1,16 +1,24 @@
 
-Title: Life of Enes
-Director: Anas
-Release year: 2024
-In color: no
-Length (in minutes): 140
+Title: Doctor who
+Director: the doctor
+Release year: 20022
+In color: true
+Length (in minutes): 123
 Genre: DRAMA
 
 
 Title: Life of Anas
 Director: Enes
 Release year: 2024
-In color: no
+In color: false
+Length (in minutes): 140
+Genre: DRAMA
+
+
+Title: Life of Enes
+Director: Anas
+Release year: 2024
+In color: false
 Length (in minutes): 140
 Genre: DRAMA
 
@@ -18,7 +26,7 @@ Genre: DRAMA
 Title: LifeIs
 Director: Enes
 Release year: 2024
-In color: no
+In color: false
 Length (in minutes): 140
 Genre: DRAMA
 
@@ -26,23 +34,23 @@ Genre: DRAMA
 Title: LifeWas
 Director: Enes
 Release year: 2024
-In color: no
+In color: false
 Length (in minutes): 140
 Genre: DRAMA
 
 
-Title: abdul
-Director: s
-Release year: 1
-In color: yes
-Length (in minutes): 1
-Genre: horror
+Title: batman
+Director: julemand
+Release year: 2022
+In color: false
+Length (in minutes): 200
+Genre: yikes
 
 
-Title: life of abdul
-Director: 1
-Release year: 1
-In color: yes
-Length (in minutes): 1
-Genre: horror
+Title: batman 2
+Director: batman
+Release year: 2002
+In color: true
+Length (in minutes): 120
+Genre: mnovie
 

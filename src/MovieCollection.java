@@ -6,11 +6,18 @@ import java.util.Scanner;
 
 public class MovieCollection {
     private ArrayList<Movie> collection = new ArrayList<>();
+        //List.of(
+            /*new Movie("Life of Enes", "Anas", 2024, false, 140, "DRAMA"),
+            new Movie("Life of Anas", "Enes", 2024, false, 140, "DRAMA"),
+            new Movie("LifeIs", "Enes", 2024, false, 140, "DRAMA"),
+            new Movie("batman", "julemand", 2022, false, 200, "yikes"),
+            new Movie("LifeWas", "Enes", 2024, false, 140, "DRAMA")));*/
 
 
     //Tilføjer film til arrraylist
     public void addMovie(Movie movie) {
         collection.add(movie);
+
     }
 
     //Fjerner film fra arraylist
@@ -22,6 +29,18 @@ public class MovieCollection {
     public String movieList() {
         String toPrint = "";
         int counter = 1;
+        for (Movie movie : collection) {
+            toPrint += ("\nMovie " + counter++ + ": \nTitle: " + movie.getTitle() + "\nDirector: " + movie.getDirector() +
+                    "\nRelease year: " + movie.getYearCreated() + "\nIn color: " + movie.getIsInColor() +
+                    "\nLength (in minutes): " + movie.getLengthInMinutes() + "\nGenre: " + movie.getGenre() + "\n");
+        }
+        return toPrint;
+    }
+
+    public String movieList(String term1) {
+        String toPrint = "";
+        int counter = 1;
+        sortBy(term1);
         for (Movie movie : collection) {
             toPrint += ("\nMovie " + counter++ + ": \nTitle: " + movie.getTitle() + "\nDirector: " + movie.getDirector() +
                     "\nRelease year: " + movie.getYearCreated() + "\nIn color: " + movie.getIsInColor() +
@@ -141,4 +160,18 @@ public class MovieCollection {
         sc.close();
         return "\nLoaded successfully.";
     }
+
+    //sorterer film ifølge term
+    public void sortBy(String term) {
+        switch (term) {
+            case "director" -> collection.sort(Movie.DIRECTOR_COMPARATOR);
+            case "release" -> collection.sort(Movie.RELEASE_COMPARATOR);
+            case "color" -> collection.sort(Movie.COLOR_COMPARATOR);
+            case "length" -> collection.sort(Movie.LENGTH_COMPARATOR);
+            case "genre" -> collection.sort(Movie.GENRE_COMPARATOR);
+            default -> collection.sort(Movie.TITLE_COMPARATOR);
+        }
+    }
+
+
 }
