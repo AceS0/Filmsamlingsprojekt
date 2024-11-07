@@ -20,7 +20,7 @@ public class UserInterface {
                         1. Create a movie.
                         2. Remove a movie.
                         3. Search movie.
-                        4. List the movies and sorts the movies, by using list "type".
+                        4. List the movies.
                         5. Get a help list.
                         6. Edit a movie.
                         7. Save to a file.
@@ -289,7 +289,7 @@ public class UserInterface {
                         Type [1, create] -> Create a movie.
                         Type [2, remove, r] -> Remove a movie
                         Type [3, search, s] -> Search for a movie.
-                        Type [4, list, l] -> List the movies (sorts the movies, by using list "type").
+                        Type [4, list, l] -> List the movies.
                         Type [5, help, h] -> Get a help list.
                         Type [6, edit] -> Edit a movie.
                         Type [7, savefile] -> Save movie in a file.txt.

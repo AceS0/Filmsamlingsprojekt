@@ -4,7 +4,6 @@ import java.util.*;
 public class MovieCollection {
     private ArrayList<Movie> collection = new ArrayList<>();
 
-
     //Tilføjer film til arrraylist
     public void addMovie(Movie movie) {
         collection.add(movie);
