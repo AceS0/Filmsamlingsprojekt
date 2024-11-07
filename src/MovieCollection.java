@@ -6,12 +6,7 @@ import java.util.Scanner;
 
 public class MovieCollection {
     private ArrayList<Movie> collection = new ArrayList<>();
-        //List.of(
-            /*new Movie("Life of Enes", "Anas", 2024, false, 140, "DRAMA"),
-            new Movie("Life of Anas", "Enes", 2024, false, 140, "DRAMA"),
-            new Movie("LifeIs", "Enes", 2024, false, 140, "DRAMA"),
-            new Movie("batman", "julemand", 2022, false, 200, "yikes"),
-            new Movie("LifeWas", "Enes", 2024, false, 140, "DRAMA")));*/
+
 
 
     //Tilføjer film til arrraylist
@@ -146,6 +141,15 @@ public class MovieCollection {
             case "genre" -> collection.sort(Movie.GENRE_COMPARATOR);
             default -> collection.sort(Movie.TITLE_COMPARATOR);
         }
+    }
+
+    public String deleteFile(){
+       File file = new File("save.txt");
+       if (file.delete()){
+            return "You have deleted a file ";
+        } else {
+           return "You need a file, before you can delete.";
+       }
     }
 
 
