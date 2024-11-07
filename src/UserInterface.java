@@ -138,7 +138,7 @@ public class UserInterface {
         while (sc.hasNextInt()) {
             System.out.print("Invalid input, please enter a genre-type: ");
             sc.next();
-        }
+        }                                
         String genre = sc.next();
         //Tilføjer filmen til MovieCollection:
         controller.addMovieToCollection(input, director, yearCreated, isInColorBool, lengthInMinutes, genre);

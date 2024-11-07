@@ -83,9 +83,6 @@ public class MovieCollection {
                 ";" + movieName.getYearCreated() + ";" + movieName.getIsInColor() +
                 ";" + movieName.getLengthInMinutes() + ";" + movieName.getGenre());
     }
-    public static boolean compareList(ArrayList ls1, ArrayList ls2){
-        return ls1.toString().contentEquals(ls2.toString())?true:false;
-    }
 
     public String saveMovieFile() {
         File file = new File("save.txt");
@@ -134,7 +131,8 @@ public class MovieCollection {
             sc.close();
         } catch (FileNotFoundException e) {
         } catch (NullPointerException e){
-        } catch (NoSuchElementException e){}
+        } catch (NoSuchElementException e){
+        }
         return "\nLoaded successfully.";
     }
 
