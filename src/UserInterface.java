@@ -20,12 +20,12 @@ public class UserInterface {
                         1. Create a movie.
                         2. Remove a movie.
                         3. Search movie.
-                        4. List of the movies
+                        4. List the movies and sorts the movies, by using list "type".
                         5. Get a help list.
                         6. Edit a movie.
                         7. Save to a file.
                         8. Load file.
-                        9. delete a file.
+                        9. Delete a file.
                         10. Exit""");
 
         while (running) {
@@ -62,13 +62,7 @@ public class UserInterface {
                             searchForFilm(sc.next());
                         }
                     }
-                    case "list", "l", "4" -> {
-                        if (splitPut.length > 1) {
-                            getMovieList(splitPut[1]);
-                        } else {
-                            getMovieList("title");
-                        }
-                    }
+                    case "list", "l", "4" -> list();
 
                     case "help", "h", "5" -> helpList();
                     case "edit", "6" -> {
@@ -196,19 +190,94 @@ public class UserInterface {
     }
 
     //Metode til at få listen på film
-    public void getMovieList(String sortTerm) {
-        if (Objects.equals(controller.getMovies().movieList(sortTerm), "")) {
-            System.out.println("\nThe list is empty, please create a movie.\n");
-        } else {
-            System.out.println(controller.getMovies().movieList(sortTerm));
-        }
-    }
+
 
     public void getMovieListShort() {
         if (Objects.equals(controller.getMovies().movieListShort(), "")) {
             System.out.println("\nThe list is empty, please create a movie.\n");
         } else {
             System.out.println(controller.getMovies().movieListShort());
+        }
+    }
+
+    public void list(){
+        if (Objects.equals(controller.getMovies().movieList(), "")) {
+            System.out.println("\nThe list is empty, please create a movie.\n");
+        }
+        Scanner sc = new Scanner(System.in);
+        System.out.println("How do you want the list to be sorted?");
+        System.out.println(
+                """
+                Sort by:
+                1. "title"
+                2. "director"
+                3. "release"
+                4. "color"
+                5. "length"
+                6. "genre"
+                """);
+        System.out.print("Type here: ");
+        String input = sc.next();
+        switch (input){
+            case "2","director","d" ->{
+                input = "director";
+                controller.getMovies().movieList(input,"");
+            }
+            case "3","release","r" ->{
+                input = "release";
+                controller.getMovies().movieList(input,"");
+            }
+            case "4","color","c" ->{
+                input = "color";
+                controller.getMovies().movieList(input,"");
+            }
+            case "5","length","l" ->{
+                input = "length";
+                controller.getMovies().movieList(input,"");
+            }
+            case "6","genre","g" ->{
+                input = "genre";
+                controller.getMovies().movieList(input,"");
+            }
+            default -> {
+                input = "title";
+                controller.getMovies().movieList(input,"");
+            }
+        }
+        System.out.println("Do you want to add a secondary sort? (yes or no)");
+        System.out.print("Type here: ");
+        while(true) {
+            String input2 = sc.next();
+            if (input2.equalsIgnoreCase("yes")) {
+                System.out.println("How do you want the secondary attribute sorted?");
+                System.out.println(
+                        """
+                        Sort by:
+                        1. "title"
+                        2. "director"
+                        3. "release"
+                        4. "color"
+                        5. "length"
+                        6. "genre"
+                        """);
+                System.out.print("Type here: ");
+                String input3 = sc.next();
+                switch (input3){
+                    case "1","title","t" -> controller.getMovies().movieList(input,"title");
+                    case "2","director","d" ->controller.getMovies().movieList(input,"director");
+                    case "3","release","r" ->controller.getMovies().movieList(input,"release");
+                    case "4","color","c" ->controller.getMovies().movieList(input,"color");
+                    case "5","length","l" ->controller.getMovies().movieList(input,"length");
+                    case "6","genre","g" ->controller.getMovies().movieList(input,"genre");
+                }
+                System.out.println(controller.getMovies().movieList());
+                break;
+            } else if (input2.equalsIgnoreCase("no")) {
+                break;
+            } else {
+                System.out.println("Invalid input, please try again.");
+                System.out.print("Type here: ");
+            }
         }
     }
 
@@ -219,7 +288,7 @@ public class UserInterface {
                         Type [1, create] -> Create a movie.
                         Type [2, remove, r] -> Remove a movie
                         Type [3, search, s] -> Search for a movie.
-                        Type [4, list, l] -> List the movies.
+                        Type [4, list, l] -> List the movies (sorts the movies, by using list "type").
                         Type [5, help, h] -> Get a help list.
                         Type [6, edit] -> Edit a movie.
                         Type [7, savefile] -> Save movie in a file.txt.
