@@ -147,8 +147,11 @@ public class MovieCollection {
 
     public String deleteFile(){
        File file = new File("save.txt");
-       return "You have deleted a file " + file.delete();
-
+       if (file.delete()){
+            return "You have deleted a file ";
+        } else {
+           return "You need a file, before you can delete.";
+       }
     }
 
 

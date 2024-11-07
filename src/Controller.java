@@ -61,7 +61,7 @@ public class Controller {
         return movies.loadMovieFile();
     }
 
-    public void runDeleteFile(){
-        movies.deleteFile();
+    public String runDeleteFile(){
+        return movies.deleteFile();
     }
 }

@@ -81,7 +81,7 @@ public class UserInterface {
                     }
                     case "save", "7" -> saveMovie();
                     case "load", "8" -> loadMovie();
-                    case "delete", "9" -> controller.runDeleteFile();
+                    case "delete", "9" -> deleteFile();
                     case "exit", "10" -> {
                         System.out.println("Thank you for your time, hope to see you again.");
                         running = false;
@@ -399,5 +399,8 @@ public class UserInterface {
     }
     public void saveMovie(){
         System.out.println(controller.runSave());
+    }
+    public void deleteFile(){
+        System.out.println(controller.runDeleteFile());
     }
 }
