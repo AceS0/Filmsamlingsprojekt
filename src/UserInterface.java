@@ -63,7 +63,6 @@ public class UserInterface {
                         }
                     }
                     case "list", "l", "4" -> list();
-
                     case "help", "h", "5" -> helpList();
                     case "edit", "6" -> {
                         if (splitPut.length > 1) {
@@ -174,7 +173,7 @@ public class UserInterface {
                             return;
                         }
                     }
-                    if (found.size() == 0 || found.isEmpty()) {
+                    if (found.isEmpty()) {
                         System.out.println("The movie doesn't exist, please try again or to leave type \"exit\" or \"quit\".");
                         System.out.print("Type here: ");
                         String input = sc.nextLine();
@@ -203,6 +202,7 @@ public class UserInterface {
     public void list(){
         if (Objects.equals(controller.getMovies().movieList(), "")) {
             System.out.println("\nThe list is empty, please create a movie.\n");
+            userInterface();
         }
         Scanner sc = new Scanner(System.in);
         System.out.println("How do you want the list to be sorted?");
@@ -263,16 +263,17 @@ public class UserInterface {
                 System.out.print("Type here: ");
                 String input3 = sc.next();
                 switch (input3){
-                    case "1","title","t" -> controller.getMovies().movieList(input,"title");
                     case "2","director","d" ->controller.getMovies().movieList(input,"director");
                     case "3","release","r" ->controller.getMovies().movieList(input,"release");
                     case "4","color","c" ->controller.getMovies().movieList(input,"color");
                     case "5","length","l" ->controller.getMovies().movieList(input,"length");
                     case "6","genre","g" ->controller.getMovies().movieList(input,"genre");
+                    default -> controller.getMovies().movieList(input,"title");
                 }
                 System.out.println(controller.getMovies().movieList());
                 break;
             } else if (input2.equalsIgnoreCase("no")) {
+                System.out.println(controller.getMovies().movieList());
                 break;
             } else {
                 System.out.println("Invalid input, please try again.");
