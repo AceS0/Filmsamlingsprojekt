@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class MovieCollection {
-    private ArrayList<Movie> collection = new ArrayList<>();
+    private final ArrayList<Movie> collection = new ArrayList<>();
 
     //Tilføjer film til arrraylist
     public void addMovie(Movie movie) {
@@ -53,7 +53,7 @@ public class MovieCollection {
 
     //Metode til at finde film
     public ArrayList<Movie> movieFinder(String searchTerm) {
-        ArrayList<Movie> results = new ArrayList<Movie>();
+        ArrayList<Movie> results = new ArrayList<>();
         for (Movie movie : collection) {
 
             if (movie.getTitle().toLowerCase().contains(searchTerm.toLowerCase())) {
@@ -107,7 +107,7 @@ public class MovieCollection {
                         (Integer.parseInt(attributes[2])), (Boolean.parseBoolean(attributes[3])),
                         (Integer.parseInt(attributes[4])), (attributes[5]));
 
-                Boolean duplicate = false;
+                boolean duplicate = false;
                 for (Movie movie : collection) {
                     if (movie.getTitle().equals(checkFile.getTitle())) {
                         duplicate = true;
@@ -119,9 +119,7 @@ public class MovieCollection {
                 }
             }
             sc.close();
-        } catch (FileNotFoundException e) {
-        } catch (NullPointerException e) {
-        } catch (NoSuchElementException e) {
+        } catch (FileNotFoundException | NullPointerException | NoSuchElementException ignored) {
         }
         return "\nLoaded successfully.";
     }
