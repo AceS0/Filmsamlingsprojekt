@@ -1,17 +1,24 @@
+package Controller;
 import java.util.ArrayList;
+
+import model.*;
+import filehandling.*;
 
 public class Controller {
     private MovieCollection movies = new MovieCollection();
+    private Backup fh = new Backup();
 
 
-    //Controller kobler alle metoder fra andre klasser til UserInterface.
+    //Controller.Controller kobler alle metoder fra andre klasser til ui.UserInterface.
     public void addMovieToCollection(String title, String director, int yearCreated, boolean isInColor, int lengthInMinutes, String genre) {
-        movies.addMovie(new Movie(title, director, yearCreated, isInColor, lengthInMinutes, genre));
+        movies.addMovie(title, director, yearCreated, isInColor, lengthInMinutes, genre);
+        runSave();
     }
 
 
     public void removeMovieFromCollection(Movie movie){
         movies.removeMovie(movie);
+        runSave();
     }
 
 
@@ -54,14 +61,14 @@ public class Controller {
     }
 
     public String runSave(){
-        return movies.saveMovieFile();
+        return fh.saveMovieFile(movies);
     }
 
     public String runLoad(){
-        return movies.loadMovieFile();
+        return fh.loadMovieFile(movies);
     }
 
     public String runDeleteFile(){
-        return movies.deleteFile();
+        return fh.deleteFile();
     }
-}
+ }

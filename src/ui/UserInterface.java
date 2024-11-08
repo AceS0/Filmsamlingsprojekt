@@ -1,3 +1,8 @@
+package ui;
+
+import Controller.Controller;
+import model.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -135,7 +140,7 @@ public class UserInterface {
             sc.next();
         }                                
         String genre = sc.next();
-        //Tilføjer filmen til MovieCollection:
+        //Tilføjer filmen til model.MovieCollection:
         controller.addMovieToCollection(input, director, yearCreated, isInColorBool, lengthInMinutes, genre);
     }
 
@@ -159,7 +164,7 @@ public class UserInterface {
                     StringBuilder toPrint = new StringBuilder();
                     int counter = 1;
                     for (Movie movie : found) {
-                        toPrint.append("\nMovie ").append(counter++).append(": \nTitle: ").append(movie.getTitle());
+                        toPrint.append("\nmodel.Movie ").append(counter++).append(": \nTitle: ").append(movie.getTitle());
                     }
                     System.out.println(toPrint);
                     System.out.println("Which movie do you want to remove?");
@@ -339,7 +344,7 @@ public class UserInterface {
                 StringBuilder toPrint = new StringBuilder();
                 int counter = 1;
                 for (Movie movie : found) {
-                    toPrint.append("\nMovie ").append(counter++).append(": \nTitle: ").append(movie.getTitle());
+                    toPrint.append("\nmodel.Movie ").append(counter++).append(": \nTitle: ").append(movie.getTitle());
                 }
 
                 System.out.println(toPrint);
