@@ -25,10 +25,6 @@ public class Movie implements Comparable {
         this.genre = genre;
     }
 
-    public Movie(){
-
-    }
-
 
 
 //-----------------------------------------------------Getter/Setter--------------------------------------------------//
